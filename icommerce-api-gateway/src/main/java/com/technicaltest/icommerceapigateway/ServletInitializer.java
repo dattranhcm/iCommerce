@@ -1,5 +1,6 @@
-package com.technicaltest.icommerceapigateway.icommerceapigateway;
+package com.technicaltest.icommerceapigateway;
 
+import com.technicaltest.icommerceapigateway.IcommerceApiGatewayApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
