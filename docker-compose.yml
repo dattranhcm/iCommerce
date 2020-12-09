@@ -32,6 +32,8 @@ services:
     links:
       - kafka
       - postgres
+    ports:
+      - 8888:8888
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
   order-service:
