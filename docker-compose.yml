@@ -11,15 +11,15 @@ services:
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_CREATE_TOPICS: "order:5:1"
-  apache:
-    build: docker/apache
-    links:
-      - api-gateway
-      - order-service
-      - config-server
-      - user-service
-    ports:
-      - "8080:80"
+#  apache:
+#    build: docker/apache
+#    links:
+#      - api-gateway
+#      - order-service
+#      - config-server
+#      - user-service
+#    ports:
+#      - "8080:80"
   postgres:
     build: docker/postgres
     environment:
@@ -33,7 +33,7 @@ services:
       - kafka
       - postgres
     ports:
-      - 8888:8888
+      - 8081:8080
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
   order-service:
