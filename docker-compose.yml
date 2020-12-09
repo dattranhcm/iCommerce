@@ -1,38 +1,57 @@
-version: '2'
+version: '3'
 services:
-  config-server:
-    image: icommerce/icommerce-config-server
-    container_name: config-server
-    mem_limit: 512M
-    ports:
-      - 8888:8888
-
-  order-service:
-    image: icommerce/icommerce-order-service
-    container_name: icommerce-oder-service
-    mem_limit: 512M
-    depends_on:
+  zookeeper:
+    image: wurstmeister/zookeeper:3.4.6
+  kafka:
+    image: wurstmeister/kafka:2.12-2.5.0
+    links:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "order:5:1"
+  apache:
+    build: docker/apache
+    links:
+      - api-gateway
+      - order-service
       - config-server
-    entrypoint: ["./dockerize","-wait=tcp://config-server:8888","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
+      - user-service
     ports:
-      - 8081:8081
-
-  user-service:
-    image: icommerce/icommerce-user-service
-    container_name: icommerce-user-service
-    mem_limit: 512M
-    depends_on:
-      - config-server
-    entrypoint: ["./dockerize","-wait=tcp://config-server:8888","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
+      - "8080:80"
+  postgres:
+    build: docker/postgres
+    environment:
+      POSTGRES_PASSWORD: dbpass
+      POSTGRES_USER: dbuser
     ports:
-      - 8082:8082
-
+        - "5432:5432"
   api-gateway:
-    image: icommerce/icommerce-api-gateway
-    container_name: icommerce-api-gateway
-    mem_limit: 512M
-    depends_on:
-      - config-server
-    entrypoint: ["./dockerize","-wait=tcp://config-server:8888","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
-    ports:
-        - 8083:8083
+    build: icommerce-api-gateway
+    links:
+      - kafka
+      - postgres
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+  order-service:
+    build: icommerce-api-gateway
+    links:
+      - kafka
+      - postgres
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+  config-server:
+    build: icommerce-api-gateway
+    links:
+      - kafka
+      - postgres
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+  user-service:
+    build: icommerce-api-gateway
+    links:
+      - kafka
+      - postgres
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
