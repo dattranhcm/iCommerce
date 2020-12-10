@@ -37,23 +37,29 @@ services:
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
   order-service:
-    build: icommerce-api-gateway
+    build: icommerce-order-service
     links:
       - kafka
       - postgres
-    environment:
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-  config-server:
-    build: icommerce-api-gateway
-    links:
-      - kafka
-      - postgres
+    ports:
+      - 8082:8080
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
   user-service:
-    build: icommerce-api-gateway
+    build: icommerce-user-service
     links:
       - kafka
       - postgres
+    ports:
+      - 8083:8080
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+  config-server:
+      build: icommerce-config-server
+      links:
+        - kafka
+        - postgres
+#      ports:
+#        - 8084:8084
+      environment:
+        SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092

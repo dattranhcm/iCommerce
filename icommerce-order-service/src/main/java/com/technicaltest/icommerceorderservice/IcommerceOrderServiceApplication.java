@@ -1,13 +1,13 @@
-package com.technicaltest.icommerceuserservice.icommerceuserservice;
+package com.technicaltest.icommerceorderservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class IcommerceUserServiceApplication {
+public class IcommerceOrderServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(IcommerceUserServiceApplication.class, args);
+		SpringApplication.run(IcommerceOrderServiceApplication.class, args);
 	}
 
 }

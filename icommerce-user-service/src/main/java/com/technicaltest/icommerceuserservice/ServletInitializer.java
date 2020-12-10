@@ -1,4 +1,4 @@
-package com.technicaltest.icommerceuserservice.icommerceuserservice;
+package com.technicaltest.icommerceuserservice;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

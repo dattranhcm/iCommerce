@@ -47,3 +47,25 @@ it cause by the lib declare on pom:
 <!--			<version>1.1.49</version>-->
 <!--		</dependency>
 SOLUTION: temporary disable and handle swagger later
+
+#4
+api-gateway_1    | ***************************
+api-gateway_1    | APPLICATION FAILED TO START
+api-gateway_1    | ***************************
+api-gateway_1    | 
+api-gateway_1    | Description:
+api-gateway_1    | 
+api-gateway_1    | Failed to bind properties under 'spring.kafka.consumer.value-deserializer' to java.lang.Class<?>:
+api-gateway_1    | 
+api-gateway_1    |     Property: spring.kafka.consumer.value-deserializer
+api-gateway_1    |     Value: com.ewolff.microservice.invoicing.events.InvoiceDeserializer
+api-gateway_1    |     Origin: class path resource [application.properties] from icommerce-api-gateway-0.0.1-SNAPSHOT.jar - 6:42
+api-gateway_1    |     Reason: No converter found capable of converting from type [java.lang.String] to type [java.lang.Class<?>]
+api-gateway_1    | 
+api-gateway_1    | Action:
+api-gateway_1    | 
+api-gateway_1    | Update your application's configuration
+api-gateway_1    | 
+SOLOTION: temporary lock the config `spring.kafka.consumer.value-deserializer` on application.properties and fix it later
+#5 note: 
+recommend: change user service to customer service, api gateway to communication service

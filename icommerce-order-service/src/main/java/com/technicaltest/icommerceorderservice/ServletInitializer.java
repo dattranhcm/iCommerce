@@ -1,5 +1,6 @@
-package com.technicaltest.icommerceorderservice.icommerceorderservice;
+package com.technicaltest.icommerceorderservice;
 
+import com.technicaltest.icommerceorderservice.IcommerceOrderServiceApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 

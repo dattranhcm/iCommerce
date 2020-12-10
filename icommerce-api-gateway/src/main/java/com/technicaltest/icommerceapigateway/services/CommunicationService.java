@@ -1,4 +1,4 @@
-package com.technicaltest.icommerceapigateway;
+package com.technicaltest.icommerceapigateway.services;
 
 //import io.swagger.v3.oas.annotations.Operation;
 //import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/communicationservice")
 @RequiredArgsConstructor
 //@Tag(name = "user")
 public class CommunicationService {
@@ -27,9 +27,9 @@ public class CommunicationService {
 //            @ApiResponse(responseCode  = "403", description = "Truy cập bị cấm"),
 //            @ApiResponse(responseCode  = "404", description = "Không tìm thấy")
 //    })
-    @GetMapping("/users")
+    @GetMapping("/welcome")
     public String getAllUsers() {
-        return "Welcome communication service";
+        return "Welcome to communication service";
     }
 
 
