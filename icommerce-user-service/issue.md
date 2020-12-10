@@ -69,3 +69,15 @@ api-gateway_1    |
 SOLOTION: temporary lock the config `spring.kafka.consumer.value-deserializer` on application.properties and fix it later
 #5 note: 
 recommend: change user service to customer service, api gateway to communication service
+
+#6
+after remove container and rebuild new replace postgres container
+still cant drop db by scrip
+postgres_1       | server started
+postgres_1       | CREATE DATABASE
+postgres_1       | 
+postgres_1       | 
+postgres_1       | /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/create_user_table.sql
+postgres_1       | 2020-12-10 16:07:27.090 UTC [71] ERROR:  cannot drop the currently open database
+postgres_1       | 2020-12-10 16:07:27.090 UTC [71] STATEMENT:  DROP DATABASE IF EXISTS dbuser;
+postgres_1       | psql:/docker-entrypoint-initdb.d/create_user_table.sql:1: ERROR:  cannot drop the currently open database

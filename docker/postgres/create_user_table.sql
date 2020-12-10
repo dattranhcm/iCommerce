@@ -1,4 +1,5 @@
-\c dbuser;
+DROP DATABASE IF EXISTS dbuser;
+CREATE DATABASE dbuser;
 DROP TABLE IF EXISTS t_users CASCADE;
 create table t_users (
    id SERIAL PRIMARY KEY NOT NULL,
@@ -8,6 +9,5 @@ create table t_users (
    mobile TEXT NOT NULL,
    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-)
-
+);
 INSERT INTO t_users (first_name,last_name,email,mobile) values ('Dat', 'Tran', 'hoangdat@gmail.com', '0393974369');
