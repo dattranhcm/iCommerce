@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/icommerce.iml" filepath="$PROJECT_DIR$/icommerce.iml" />
       <module fileurl="file://$PROJECT_DIR$/icommerce-api-gateway/icommerce-api-gateway.iml" filepath="$PROJECT_DIR$/icommerce-api-gateway/icommerce-api-gateway.iml" />
-      <module fileurl="file://$PROJECT_DIR$/icommerce-config-server/icommerce-config-server.iml" filepath="$PROJECT_DIR$/icommerce-config-server/icommerce-config-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/icommerce-order-service/icommerce-order-service.iml" filepath="$PROJECT_DIR$/icommerce-order-service/icommerce-order-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/icommerce-user-service/icommerce-user-service.iml" filepath="$PROJECT_DIR$/icommerce-user-service/icommerce-user-service.iml" />
     </modules>

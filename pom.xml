@@ -19,7 +19,6 @@
 		<module>icommerce-api-gateway</module>
 		<module>icommerce-order-service</module>
 		<module>icommerce-user-service</module>
-		<module>icommerce-config-server</module>
 	</modules>
 
 	<properties>
