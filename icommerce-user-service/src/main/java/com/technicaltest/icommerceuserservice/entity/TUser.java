@@ -13,15 +13,15 @@ import java.util.UUID;
 @Entity
 public class TUser {
 
-    @Id
-    @GeneratedValue(generator = "hibernate-uuid")
-    @GenericGenerator(name = "hibernate-uuid", strategy = "hibernate-uuid")
-    @Column(name = "uuid", unique = true)
-    private String customerId;
-
 //    @Id
-//    @GeneratedValue
-//    private Long customerId;
+//    @GeneratedValue(generator = "hibernate-uuid")
+//    @GenericGenerator(name = "hibernate-uuid", strategy = "hibernate-uuid")
+//    @Column(name = "uuid", unique = true)
+//    private String customerId;
+
+    @Id
+    @GeneratedValue
+    private Long id;
 
     @Column
     private String fullName;
@@ -56,20 +56,13 @@ public class TUser {
         this.modifiedDate = modifiedDate;
     }
 
-    public String getCustomerId() {
-        return customerId;
+    public Long getId() {
+        return id;
     }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+    public void setId(Long id) {
+        this.id = id;
     }
-//    public Long getCustomerId() {
-//        return customerId;
-//    }
-//
-//    public void setCustomerId(Long customerId) {
-//        this.customerId = customerId;
-//    }
 
     public String getFullName() {
         return fullName;
