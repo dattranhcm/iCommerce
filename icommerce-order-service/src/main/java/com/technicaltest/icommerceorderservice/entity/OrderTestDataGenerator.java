@@ -18,6 +18,6 @@ public class OrderTestDataGenerator {
     @PostConstruct
     public void generateTestData() {
         orderRepository
-                .save(new TOrder());
+                .save(new TOrder("Shopee12", new Date(), new Date()));
     }
 }

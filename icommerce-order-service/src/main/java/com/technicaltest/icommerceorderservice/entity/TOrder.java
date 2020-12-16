@@ -29,11 +29,16 @@ public class TOrder {
 
     public TOrder() {
         super();
-    //    this.orderUUID = UUID.randomUUID().toString();
-        this.orderID = "TIKI01";
-        this.startedDate = new Date();
-        this.modifiedDate = new Date();
+
     }
+
+    public TOrder(String orderID, Date startedDate, Date modifiedDate) {
+        super();
+        this.orderID = orderID;
+        this.startedDate = startedDate;
+        this.modifiedDate = modifiedDate;
+    }
+
 
     public Long getId() {
         return id;

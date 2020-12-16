@@ -20,18 +20,26 @@ services:
 #      - user-service
 #    ports:
 #      - "8080:80"
-  postgres:
+#  postgres:
+#    build: docker/postgres
+#    environment:
+#      POSTGRES_PASSWORD: dbpass
+#      POSTGRES_USER: dbuser
+#    ports:
+#        - "5432:5432"
+  mysql-db:
     build: docker/postgres
-    environment:
-      POSTGRES_PASSWORD: dbpass
-      POSTGRES_USER: dbuser
     ports:
-        - "5432:5432"
+        - "3307:3306"
+    environment:
+       MYSQL_ROOT_PASSWORD: 123456
+       MYSQL_USER: dbuser
+       MYSQL_PASSWORD: dbpass
   api-gateway:
     build: icommerce-api-gateway
     links:
       - kafka
-      - postgres
+      - mysql-db
     ports:
       - 8081:8080
     environment:
@@ -40,7 +48,7 @@ services:
     build: icommerce-order-service
     links:
       - kafka
-      - postgres
+      - mysql-db
     ports:
       - 8082:8080
     environment:
@@ -49,7 +57,7 @@ services:
     build: icommerce-user-service
     links:
       - kafka
-      - postgres
+      - mysql-db
     ports:
       - 8083:8080
     environment:
