@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerService {
 
     @GetMapping("/welcome")
-    public String welcome() {
+    public Object welcome() {
         return "Welcome to Customer service";
     }
 }

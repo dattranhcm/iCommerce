@@ -2,15 +2,13 @@ package com.technicaltest.icommerceuserservice.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
+@Table(name = "t_customer")
 public class TCustomer {
 
 //    @Id

@@ -12,5 +12,7 @@ sudo docker container prune
 
 #list apis: 
 ## http://localhost:8081/gateway-service/welcome (move file application ra ben ngoai cung`)
+## http://localhost:8081/gateway-service/call-customer-service
+
 ## http://localhost:8082/order-service/welcome
 ## http://localhost:8083/customer-service/welcome 

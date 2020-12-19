@@ -2,56 +2,44 @@ package com.technicaltest.icommerceorderservice.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
+@Table(name = "t_order")
 public class TOrder {
 //    @Id
 //    @GeneratedValue(generator = "hibernate-uuid")
 //    @GenericGenerator(name = "hibernate-uuid", strategy = "hibernate-uuid")
 //    @Column(name = "uuid", unique = true)
 //    private String orderUUID;
-@Id
-@GeneratedValue
-private Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-    @Column
-    private String fullName;
+    @Column(name = "first_name")
+    private String firstName;
 
-    @Column
-    private String mobile;
+    @Column(name = "last_name")
+    private String lastName;
 
-    @Column
-    private String address;
-
-    @Column(nullable = false)
+    @Column(name = "email")
     @Email
     private String email;
 
-    @Column
-    private Date startedDate;
+    @Column(name = "mobile")
+    private String mobile;
 
-    @Column
-    private Date modifiedDate;
+    @Column(name = "created_at")
+    private Date createdAt;
+
+    @Column(name = "updated_at")
+    private Date updatedAt;
 
     public TOrder() {
         super();
-    }
-
-    public TOrder(String fullName, String mobile, String address, String email, Date startedDate, Date modifiedDate) {
-        super();
-        this.fullName = fullName;
-        this.mobile = mobile;
-        this.address = address;
-        this.email = email;
-        this.startedDate = startedDate;
-        this.modifiedDate = modifiedDate;
     }
 
     public Long getId() {
@@ -62,28 +50,20 @@ private Long id;
         this.id = id;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -94,19 +74,27 @@ private Long id;
         this.email = email;
     }
 
-    public Date getStartedDate() {
-        return startedDate;
+    public String getMobile() {
+        return mobile;
     }
 
-    public void setStartedDate(Date startedDate) {
-        this.startedDate = startedDate;
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
-    public Date getModifiedDate() {
-        return modifiedDate;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
