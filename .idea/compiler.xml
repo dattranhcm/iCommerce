@@ -7,24 +7,24 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="icommerce-api-gateway" />
-        <module name="icommerce-user-service" />
         <module name="icommerce-order-service" />
+        <module name="icommerce-customer-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="icommerce" target="1.8" />
       <module name="icommerce-api-gateway" target="1.8" />
       <module name="icommerce-config-server" target="1.8" />
+      <module name="icommerce-customer-service" target="1.8" />
       <module name="icommerce-order-service" target="1.8" />
-      <module name="icommerce-user-service" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="icommerce-api-gateway" options="-parameters" />
       <module name="icommerce-config-server" options="-parameters" />
+      <module name="icommerce-customer-service" options="-parameters" />
       <module name="icommerce-order-service" options="-parameters" />
-      <module name="icommerce-user-service" options="-parameters" />
     </option>
   </component>
 </project>

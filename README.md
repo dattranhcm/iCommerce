@@ -8,4 +8,9 @@ sudo docker image prune -a
 sudo docker ps -a
 sudo docker container prune
 
-#fist api: http://localhost:8081/communicationservice/welcome (move file application ra ben ngoai cung`)
+# build war -> build image to create container -> up container to fist start and restart instant
+
+#list apis: 
+## http://localhost:8081/gateway-service/welcome (move file application ra ben ngoai cung`)
+## http://localhost:8082/order-service/welcome
+## http://localhost:8083/customer-service/welcome 

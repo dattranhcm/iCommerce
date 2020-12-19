@@ -1,4 +1,4 @@
-package com.technicaltest.icommerceorderservice.entity;
+package com.technicaltest.icommerceuserservice.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -11,15 +11,17 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-public class TOrder {
+public class TCustomer {
+
 //    @Id
 //    @GeneratedValue(generator = "hibernate-uuid")
 //    @GenericGenerator(name = "hibernate-uuid", strategy = "hibernate-uuid")
 //    @Column(name = "uuid", unique = true)
-//    private String orderUUID;
-@Id
-@GeneratedValue
-private Long id;
+//    private String customerId;
+
+    @Id
+    @GeneratedValue
+    private Long id;
 
     @Column
     private String fullName;
@@ -40,11 +42,11 @@ private Long id;
     @Column
     private Date modifiedDate;
 
-    public TOrder() {
+    public TCustomer() {
         super();
     }
 
-    public TOrder(String fullName, String mobile, String address, String email, Date startedDate, Date modifiedDate) {
+    public TCustomer(String fullName, String mobile, String address, String email, Date startedDate, Date modifiedDate) {
         super();
         this.fullName = fullName;
         this.mobile = mobile;
