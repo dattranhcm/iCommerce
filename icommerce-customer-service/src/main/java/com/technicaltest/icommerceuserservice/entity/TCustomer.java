@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -47,6 +48,9 @@ public class TCustomer {
 
     @Column(name = "is_active")
     private String isActive;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "t_customer")
+    private List<TAddressCustomer> addresses;
 
     @Column(name = "created_at")
     private Date startedDate;
@@ -144,6 +148,14 @@ public class TCustomer {
 
     public void setIsActive(String isActive) {
         this.isActive = isActive;
+    }
+
+    public List<TAddressCustomer> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<TAddressCustomer> addresses) {
+        this.addresses = addresses;
     }
 
     public Date getStartedDate() {

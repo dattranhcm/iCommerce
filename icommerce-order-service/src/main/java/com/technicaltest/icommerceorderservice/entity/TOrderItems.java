@@ -1,6 +1,7 @@
 package com.technicaltest.icommerceorderservice.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -19,7 +20,7 @@ public class TOrderItems {
     private String itemUuid;
 
     @Column(name = "item_price")
-    private Integer itemPrice;
+    private BigDecimal itemPrice;
 
     @Column(name = "sub_order_amount")
     private Integer subOrderAmount;
@@ -57,11 +58,11 @@ public class TOrderItems {
         this.itemUuid = itemUuid;
     }
 
-    public Integer getItemPrice() {
+    public BigDecimal getItemPrice() {
         return itemPrice;
     }
 
-    public void setItemPrice(Integer itemPrice) {
+    public void setItemPrice(BigDecimal itemPrice) {
         this.itemPrice = itemPrice;
     }
 

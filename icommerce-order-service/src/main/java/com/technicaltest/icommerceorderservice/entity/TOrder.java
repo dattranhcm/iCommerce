@@ -3,6 +3,7 @@ package com.technicaltest.icommerceorderservice.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ public class TOrder {
     private String customerId;
 
     @Column(name = "total_amount")
-    private Integer totalAmount;
+    private BigDecimal totalAmount;
 
     @Column(name = "ship_address")
     private String shipAddress;
@@ -56,11 +57,11 @@ public class TOrder {
         this.customerId = customerId;
     }
 
-    public Integer getTotalAmount() {
+    public BigDecimal getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Integer totalAmount) {
+    public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
     }
 

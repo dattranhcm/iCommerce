@@ -15,7 +15,7 @@ public class TAddressCustomer {
     private String address;
 
     @ManyToOne
-    @JoinColumn(name = "uuid")
+    @JoinColumn(name = "customer_id")
     private TCustomer customer;
 
     @Column(name = "is_default")
