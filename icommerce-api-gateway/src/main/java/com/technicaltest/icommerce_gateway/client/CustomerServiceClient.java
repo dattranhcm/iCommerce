@@ -8,13 +8,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
 public class CustomerServiceClient {
 
-    // Could be changed for testing purpose
     private String hostname = "http://customer-service:8080/customer-service/";
 
     @Autowired
@@ -24,8 +21,7 @@ public class CustomerServiceClient {
         return webClientBuilder.build()
                 .get()
                 .uri(hostname + "welcome")
-                .accept(MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE)
                 .retrieve()
                 .bodyToMono(Object.class);
     }

@@ -8,12 +8,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
 public class OrderServiceClient {
-    // Could be changed for testing purpose
     private String hostname = "http://order-service:8080/order-service/";
 
     @Autowired

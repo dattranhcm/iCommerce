@@ -11,79 +11,91 @@ import java.util.UUID;
 @Table(name = "t_customer")
 public class TCustomer {
 
-//    @Id
-//    @GeneratedValue(generator = "hibernate-uuid")
-//    @GenericGenerator(name = "hibernate-uuid", strategy = "hibernate-uuid")
-//    @Column(name = "uuid", unique = true)
-//    private String customerId;
-
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @Column(name = "uuid", unique = true)
+    private UUID uuid;
 
-    @Column
-    private String fullName;
+    @Column(name = "user_name")
+    private String userName;
 
-    @Column
-    private String mobile;
+    @Column(name = "hash_password")
+    private String hashPassword;
 
-    @Column
-    private String address;
+    @Column(name = "first_name")
+    private String firstName;
 
-    @Column(nullable = false)
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "email")
     @Email
     private String email;
 
-    @Column
+    @Column(name = "mobile")
+    private String mobile;
+
+    @Column(name = "facebook_id")
+    private String facebookId;
+
+    @Column(name = "facebook_token")
+    private String facebookToken;
+
+    @Column(name = "user_type")
+    private String userType;
+
+    @Column(name = "is_active")
+    private String isActive;
+
+    @Column(name = "created_at")
     private Date startedDate;
 
-    @Column
-    private Date modifiedDate;
+    @Column(name = "updated_at")
+    private Date updatedAt;
 
     public TCustomer() {
         super();
     }
 
-    public TCustomer(String fullName, String mobile, String address, String email, Date startedDate, Date modifiedDate) {
-        super();
-        this.fullName = fullName;
-        this.mobile = mobile;
-        this.address = address;
-        this.email = email;
-        this.startedDate = startedDate;
-        this.modifiedDate = modifiedDate;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public Long getId() {
-        return id;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getUserName() {
+        return userName;
     }
 
-    public String getFullName() {
-        return fullName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public String getHashPassword() {
+        return hashPassword;
     }
 
-    public String getMobile() {
-        return mobile;
+    public void setHashPassword(String hashPassword) {
+        this.hashPassword = hashPassword;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getAddress() {
-        return address;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -94,6 +106,46 @@ public class TCustomer {
         this.email = email;
     }
 
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getFacebookId() {
+        return facebookId;
+    }
+
+    public void setFacebookId(String facebookId) {
+        this.facebookId = facebookId;
+    }
+
+    public String getFacebookToken() {
+        return facebookToken;
+    }
+
+    public void setFacebookToken(String facebookToken) {
+        this.facebookToken = facebookToken;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
+    }
+
     public Date getStartedDate() {
         return startedDate;
     }
@@ -102,11 +154,11 @@ public class TCustomer {
         this.startedDate = startedDate;
     }
 
-    public Date getModifiedDate() {
-        return modifiedDate;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

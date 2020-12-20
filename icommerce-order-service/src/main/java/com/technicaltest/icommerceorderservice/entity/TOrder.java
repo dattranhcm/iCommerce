@@ -3,34 +3,32 @@ package com.technicaltest.icommerceorderservice.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Table(name = "t_order")
 public class TOrder {
-//    @Id
-//    @GeneratedValue(generator = "hibernate-uuid")
-//    @GenericGenerator(name = "hibernate-uuid", strategy = "hibernate-uuid")
-//    @Column(name = "uuid", unique = true)
-//    private String orderUUID;
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @Column(name = "uuid", unique = true)
+    private UUID uuid;
 
-    @Column(name = "first_name")
-    private String firstName;
+    @Column(name = "customer_id")
+    private String customerId;
 
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "total_amount")
+    private Integer totalAmount;
 
-    @Column(name = "email")
-    @Email
-    private String email;
+    @Column(name = "ship_address")
+    private String shipAddress;
 
-    @Column(name = "mobile")
-    private String mobile;
+    @Column(name = "order_code", unique = true)
+    private String orderCode;
+
+    @Column(name = "status")
+    private String status;
 
     @Column(name = "created_at")
     private Date createdAt;
@@ -42,44 +40,52 @@ public class TOrder {
         super();
     }
 
-    public Long getId() {
-        return id;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
-    public String getLastName() {
-        return lastName;
+    public Integer getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setTotalAmount(Integer totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    public String getEmail() {
-        return email;
+    public String getShipAddress() {
+        return shipAddress;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setShipAddress(String shipAddress) {
+        this.shipAddress = shipAddress;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getOrderCode() {
+        return orderCode;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setOrderCode(String orderCode) {
+        this.orderCode = orderCode;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Date getCreatedAt() {
