@@ -1,24 +1,32 @@
 package com.technicaltest.icommerceorderservice.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "t_products")
 public class TProduct {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @Column(name = "uuid", unique = true)
+    private UUID uuid;
 
     @Column (name = "product_name")
     @NotNull
     private String productName;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "t_products")
+    @Column (name = "product_code")
+    @NotNull
+    private String productCode;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
     private List<TProductPrice> price;
 
     @Column(name = "created_at")
@@ -27,12 +35,20 @@ public class TProduct {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    public Long getId() {
-        return id;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
     }
 
     public String getProductName() {

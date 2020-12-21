@@ -13,8 +13,8 @@ public class TProductPrice {
     @GeneratedValue
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "product_id")
+    @ManyToOne
+    @JoinColumn(name = "product_uuid")
     @NotNull
     private TProduct product;
 

@@ -11,16 +11,8 @@ create table t_customer (
    facebook_token varchar(500),
    user_type varchar(100),
    is_active boolean DEFAULT false,
+   address text,
    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
    PRIMARY KEY (uuid)
-);
-create table t_address_customer (
-   id SERIAL NOT NULL,
-   address TEXT,
-   customer_id uuid REFERENCES t_customer(uuid),
-   is_default boolean,
-   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-   PRIMARY KEY (id)
 );

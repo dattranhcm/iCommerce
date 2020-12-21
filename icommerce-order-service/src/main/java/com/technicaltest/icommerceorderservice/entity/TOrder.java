@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -30,6 +31,9 @@ public class TOrder {
 
     @Column(name = "status")
     private String status;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+    private List<TOrderItems> orderItems;
 
     @Column(name = "created_at")
     private Date createdAt;
@@ -103,5 +107,13 @@ public class TOrder {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<TOrderItems> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<TOrderItems> orderItems) {
+        this.orderItems = orderItems;
     }
 }

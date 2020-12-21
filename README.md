@@ -7,6 +7,9 @@ sudo docker images
 sudo docker image prune -a
 sudo docker ps -a
 sudo docker container prune
+sudo docker rm order-service customer-service icommerce_api-gateway_1 icommerce_postgres_1
+sudo docker rmi icommerce_order-service icommerce_customer-service icommerce_api-gateway icommerce_postgres
+
 
 # build war -> build image to create container -> up container to fist start and restart instant
 

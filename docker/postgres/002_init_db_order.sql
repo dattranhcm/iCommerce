@@ -11,16 +11,17 @@ create table t_order (
    PRIMARY KEY (uuid)
 );
 create table t_products (
-    id SERIAL NOT NULL,
+    uuid uuid NOT NULL,
     product_name varchar(200),
+    product_code varchar(50),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    PRIMARY KEY (id)
+    PRIMARY KEY (uuid)
 );
 create table t_order_items (
     id SERIAL NOT NULL,
     order_uuid uuid REFERENCES t_order(uuid),
-    item_id int4 REFERENCES t_products(id),
+    item_uuid uuid REFERENCES t_products(uuid),
     item_price decimal,
     sub_order_amount decimal,
     sub_order_status varchar(50) NOT NULL,
@@ -31,7 +32,7 @@ create table t_order_items (
 create table t_product_price (
     id SERIAL NOT NULL,
     product_name varchar(200),
-    product_id int4 REFERENCES t_products(id),
+    product_uuid uuid REFERENCES t_products(uuid),
     price decimal,
     is_current_price boolean,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),

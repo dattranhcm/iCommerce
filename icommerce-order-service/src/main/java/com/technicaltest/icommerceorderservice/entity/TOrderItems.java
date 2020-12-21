@@ -13,7 +13,7 @@ public class TOrderItems {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "uuid")
+    @JoinColumn(name = "order_uuid")
     private TOrder order;
 
     @Column(name = "item_uuid")
