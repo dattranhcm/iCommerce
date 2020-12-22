@@ -1,14 +1,14 @@
 mvn clean package -Dmaven.test.skip=true
-docker-compose build
-docker-compose up
+sudo docker-compose build postgres redis order-service
+sudo docker-compose up postgres redis order-service
 
 #docker comment
 sudo docker images
 sudo docker image prune -a
 sudo docker ps -a
 sudo docker container prune
-sudo docker rm order-service customer-service icommerce_api-gateway_1 icommerce_postgres_1
-sudo docker rmi icommerce_order-service icommerce_customer-service icommerce_api-gateway icommerce_postgres
+sudo docker rm order-service redis-service customer-service icommerce_api-gateway_1 icommerce_postgres_1
+sudo docker rmi icommerce_order-service redis:alpine icommerce_customer-service icommerce_api-gateway icommerce_postgres
 
 
 sudo docker-compose up postgres order-service

@@ -4,59 +4,48 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 import redis.clients.jedis.Jedis;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 @Repository
-public class CartRedisRepositoryImpl implements CartRedisRepository{
+public class CartRedisRepositoryImpl implements CartRedisRepository {
+    private static final String KEY = "ShoppingCart";
 
-    private ObjectMapper objectMapper = new ObjectMapper();
-    private Jedis jedis = new Jedis();
+    private RedisTemplate<String, Object> redisTemplate;
+    private HashOperations hashOperations;
 
-    @Override
-    public void addItemToCart(String key, Object item) {
-        try {
-            String jsonObject = objectMapper.writeValueAsString(item);
-            jedis.sadd(key, jsonObject);
-
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+    @Autowired
+    public CartRedisRepositoryImpl(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
     }
 
-    @Override
-    public Collection<Object> getCart(String key, Class type) {
-        Collection<Object> cart = new ArrayList<>();
-        for (String smember : jedis.smembers(key)) {
-            try {
-                cart.add(objectMapper.readValue(smember, type));
-            } catch (JsonParseException e) {
-                e.printStackTrace();
-            } catch (JsonMappingException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return cart;
+    @PostConstruct
+    private void init() {
+        hashOperations = redisTemplate.opsForHash();
     }
 
-    @Override
-    public void deleteItemFromCart(String key, Object item) {
-        try {
-            String itemCart = objectMapper.writeValueAsString(item);
-            jedis.srem(key, itemCart);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+    public void add(final ShoppingCart cart) {
+        hashOperations.put(KEY, cart.getUserUuid(), cart.getProductInCart());
     }
 
-    @Override
-    public void deleteCart(String key) {
-        jedis.del(key);
+    public void delete(final String id) {
+        hashOperations.delete(KEY, id);
+    }
+
+    public ShoppingCart findCart(final String id) {
+        return (ShoppingCart) hashOperations.get(KEY, id);
+    }
+
+    public Map<Object, Object> findAllCarts() {
+        return hashOperations.entries(KEY);
     }
 }
