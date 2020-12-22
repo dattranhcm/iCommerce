@@ -81,3 +81,7 @@ postgres_1       | /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoi
 postgres_1       | 2020-12-10 16:07:27.090 UTC [71] ERROR:  cannot drop the currently open database
 postgres_1       | 2020-12-10 16:07:27.090 UTC [71] STATEMENT:  DROP DATABASE IF EXISTS dbuser;
 postgres_1       | psql:/docker-entrypoint-initdb.d/create_user_table.sql:1: ERROR:  cannot drop the currently open database
+
+
+#7
+redis.clients.jedis.exceptions.JedisConnectionException: Failed connecting to localhost:6379

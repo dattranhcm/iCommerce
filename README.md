@@ -11,6 +11,8 @@ sudo docker rm order-service customer-service icommerce_api-gateway_1 icommerce_
 sudo docker rmi icommerce_order-service icommerce_customer-service icommerce_api-gateway icommerce_postgres
 
 
+sudo docker-compose up postgres order-service
+
 # build war -> build image to create container -> up container to fist start and restart instant
 
 #list apis: 
