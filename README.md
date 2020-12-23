@@ -7,8 +7,8 @@ sudo docker images
 sudo docker image prune -a
 sudo docker ps -a
 sudo docker container prune
-sudo docker rm order-service redis-service customer-service icommerce_api-gateway_1 icommerce_postgres_1
-sudo docker rmi icommerce_order-service redis:alpine icommerce_customer-service icommerce_api-gateway icommerce_postgres
+sudo docker rm icommerce_redis_1 order-service customer-service icommerce_api-gateway_1 icommerce_postgres_1
+sudo docker rmi icommerce_order-service redis icommerce_customer-service icommerce_api-gateway icommerce_postgres
 
 
 sudo docker-compose up postgres order-service
@@ -21,3 +21,9 @@ sudo docker-compose up postgres order-service
 
 ## http://localhost:8082/order-service/welcome
 ## http://localhost:8083/customer-service/welcome 
+
+sudo docker rm order-service
+sudo docker rmi icommerce_order-service
+mvn clean package -Dmaven.test.skip=true
+sudo docker-compose build order-service
+sudo docker-compose up order-service
