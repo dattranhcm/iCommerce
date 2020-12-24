@@ -83,3 +83,9 @@ services:
       - kafka
     ports:
       - 8084:8080
+  product-service:
+    build: icommerce-product-service
+    links:
+      - kafka
+    ports:
+      - 8085:8080

@@ -20,6 +20,7 @@
 		<module>icommerce-order-service</module>
 		<module>icommerce-customer-service</module>
 		<module>icommerce-tracking-service</module>
+		<module>icommerce-product-service</module>
 	</modules>
 
 	<properties>

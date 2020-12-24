@@ -1,4 +1,4 @@
-package com.technicaltest.icommerceorderservice.entity;
+package com.technicaltest.icommerceproductservice.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

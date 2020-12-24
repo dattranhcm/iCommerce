@@ -6,10 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="icommerce-customer-service" />
         <module name="icommerce-api-gateway" />
+        <module name="icommerce-product-service" />
         <module name="icommerce-tracking-service" />
         <module name="icommerce-order-service" />
+        <module name="icommerce-customer-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -18,6 +19,7 @@
       <module name="icommerce-config-server" target="1.8" />
       <module name="icommerce-customer-service" target="1.8" />
       <module name="icommerce-order-service" target="1.8" />
+      <module name="icommerce-product-service" target="1.8" />
       <module name="icommerce-tracking-service" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -27,6 +29,7 @@
       <module name="icommerce-config-server" options="-parameters" />
       <module name="icommerce-customer-service" options="-parameters" />
       <module name="icommerce-order-service" options="-parameters" />
+      <module name="icommerce-product-service" options="-parameters" />
       <module name="icommerce-tracking-service" options="-parameters" />
     </option>
   </component>

@@ -1,4 +1,4 @@
-package com.technicaltest.icommerceorderservice.entity;
+package com.technicaltest.icommerceproductservice.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 

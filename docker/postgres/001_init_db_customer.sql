@@ -16,3 +16,10 @@ create table t_customer (
    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
    PRIMARY KEY (uuid)
 );
+INSERT INTO t_customer(uuid, user_name, hash_password, first_name, last_name, email, mobile, user_type, is_active, address)
+VALUES ('a518d032-45f3-11eb-b378-0242ac130002', 'dattran', 'e10adc3949ba59abbe56e057f20f883e',
+'dat', 'tran', 'trhoangdat@gmail.com', '0393974369','CUSTOMER', true, '801 Nguyen Van Linh, Quan 7, TP HCM');
+
+INSERT INTO t_customer(uuid, user_name, hash_password, first_name, last_name, email, mobile, user_type, is_active, address)
+VALUES ('299626c0-45f4-11eb-b378-0242ac130002', 'anthony', 'e10adc3949ba59abbe56e057f20f883e',
+'Le', 'Quan', 'anthony@gmail.com', '0393974888','CUSTOMER', true, '801 Nguyen Van Linh, Quan 7, TP HCM');

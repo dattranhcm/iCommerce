@@ -1,6 +1,7 @@
 package com.technicaltest.icommerceorderservice.services;
 
 import com.technicaltest.icommerceorderservice.bean.CartServiceBean;
+import com.technicaltest.icommerceorderservice.bean.OrderServiceBean;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartItem;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.ShoppingCart;
 import com.technicaltest.icommerceorderservice.support.HeaderGenerator;
@@ -38,13 +39,13 @@ public class CartService {
     }
 
     @GetMapping(value = "/cart")
-    public ResponseEntity<ShoppingCart> getCart(@RequestHeader(value = "Cookie") String cartId){
-        ShoppingCart cart = cartServiceBean.getCart(cartId);
+    public ResponseEntity<ShoppingCart> getCart(@RequestHeader(value = "userID") String userUUID){
+        ShoppingCart cart = cartServiceBean.getCart(userUUID);
         if(cart != null) {
             return new ResponseEntity<ShoppingCart>(
                     cart,
                     headerGenerator.getHeadersForSuccessGetMethod(),
-                    HttpStatus.OK);
+                    HttpStatus.FOUND);
         }
         return new ResponseEntity<ShoppingCart>(
                 headerGenerator.getHeadersForError(),

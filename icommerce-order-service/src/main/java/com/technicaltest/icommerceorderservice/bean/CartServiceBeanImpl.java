@@ -1,6 +1,6 @@
 package com.technicaltest.icommerceorderservice.bean;
 
-import com.technicaltest.icommerceorderservice.entity.TProduct;
+import com.technicaltest.icommerceorderservice.entity.TOrder;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartItem;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartRedisRepository;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.ShoppingCart;
@@ -9,13 +9,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class CartServiceBeanImpl implements CartServiceBean {
 
     @Autowired
     private CartRedisRepository cartRedisRepository;
+
+    @Autowired
+    private OrderServiceBean orderServiceBean;
 
     @Override
     public ShoppingCart addItemToCart(String userUUID, CartItem product) {
@@ -35,6 +37,16 @@ public class CartServiceBeanImpl implements CartServiceBean {
     @Override
     public ShoppingCart getCart(String userUuId) {
         return cartRedisRepository.findCart(userUuId);
+    }
+
+    @Override
+    public TOrder createOrderFromCart(String userUUID) {
+        ShoppingCart cart = getCart(userUUID);
+        if (cart == null){
+            return null;
+        }
+
+        return null;
     }
 
 //    @Override
