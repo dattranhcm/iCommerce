@@ -1,6 +1,7 @@
 package com.technicaltest.icommerceorderservice.services;
 
 import com.technicaltest.icommerceorderservice.bean.CartServiceBean;
+import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartItem;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.ShoppingCart;
 import com.technicaltest.icommerceorderservice.support.HeaderGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,10 @@ public class CartService {
     @Autowired
     private HeaderGenerator headerGenerator;
 
-    @GetMapping(value = "/add-cart")
-    public ResponseEntity<ShoppingCart> addCart(){
-        ShoppingCart cart = new ShoppingCart("dat cart", null);
-        cartServiceBean.addItemToCart(cart);
+    @PostMapping(value = "/add-cart")
+    public ResponseEntity<ShoppingCart> addCart(@RequestHeader(value = "userID") String userUUID,
+                                                @RequestBody CartItem item){
+        ShoppingCart cart =cartServiceBean.addItemToCart(userUUID, item);
         if(cart != null) {
             return new ResponseEntity<ShoppingCart>(
                     cart,

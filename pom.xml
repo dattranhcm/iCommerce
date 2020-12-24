@@ -19,6 +19,7 @@
 		<module>icommerce-api-gateway</module>
 		<module>icommerce-order-service</module>
 		<module>icommerce-customer-service</module>
+		<module>icommerce-tracking-service</module>
 	</modules>
 
 	<properties>

@@ -1,17 +1,19 @@
 package com.technicaltest.icommerceorderservice.redis_shopping_cart;
 
-import com.technicaltest.icommerceorderservice.entity.TProduct;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ShoppingCart {
+public class ShoppingCart implements Serializable {
 
     private String userUuid;
-    private List<TProduct> productInCart;
+    private List<CartItem> productsInCart;
 
-    public ShoppingCart(String userUuid, List<TProduct> productInCart) {
+    public ShoppingCart(){};
+
+    public ShoppingCart(String userUuid, List<CartItem> productsInCart) {
         this.userUuid = userUuid;
-        this.productInCart = productInCart;
+        this.productsInCart = productsInCart;
     }
 
     public String getUserUuid() {
@@ -22,11 +24,11 @@ public class ShoppingCart {
         this.userUuid = userUuid;
     }
 
-    public List<TProduct> getProductInCart() {
-        return productInCart;
+    public List<CartItem> getProductsInCart() {
+        return productsInCart;
     }
 
-    public void setProductInCart(List<TProduct> productInCart) {
-        this.productInCart = productInCart;
+    public void setProductsInCart(List<CartItem> productsInCart) {
+        this.productsInCart = productsInCart;
     }
 }

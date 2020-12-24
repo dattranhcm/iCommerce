@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/icommerce-api-gateway/icommerce-api-gateway.iml" filepath="$PROJECT_DIR$/icommerce-api-gateway/icommerce-api-gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/icommerce-customer-service/icommerce-customer-service.iml" filepath="$PROJECT_DIR$/icommerce-customer-service/icommerce-customer-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/icommerce-order-service/icommerce-order-service.iml" filepath="$PROJECT_DIR$/icommerce-order-service/icommerce-order-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/icommerce-tracking-service/icommerce-tracking-service.iml" filepath="$PROJECT_DIR$/icommerce-tracking-service/icommerce-tracking-service.iml" />
     </modules>
   </component>
 </project>

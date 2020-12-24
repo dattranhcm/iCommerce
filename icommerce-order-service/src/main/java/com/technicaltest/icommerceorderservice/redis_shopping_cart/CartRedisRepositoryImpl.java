@@ -34,7 +34,7 @@ public class CartRedisRepositoryImpl implements CartRedisRepository {
     }
 
     public void add(final ShoppingCart cart) {
-        hashOperations.put(KEY, cart.getUserUuid(), cart.getProductInCart());
+        hashOperations.put(KEY, cart.getUserUuid(), cart);
     }
 
     public void delete(final String id) {

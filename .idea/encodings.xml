@@ -8,5 +8,6 @@
     <file url="file://$PROJECT_DIR$/icommerce-customer-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/icommerce-order-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/icommerce-order-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/icommerce-tracking-service" charset="UTF-8" />
   </component>
 </project>

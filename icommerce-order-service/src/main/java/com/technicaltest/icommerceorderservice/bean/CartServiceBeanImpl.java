@@ -1,6 +1,7 @@
 package com.technicaltest.icommerceorderservice.bean;
 
 import com.technicaltest.icommerceorderservice.entity.TProduct;
+import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartItem;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartRedisRepository;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,18 @@ public class CartServiceBeanImpl implements CartServiceBean {
     private CartRedisRepository cartRedisRepository;
 
     @Override
-    public void addItemToCart(ShoppingCart product) {
+    public ShoppingCart addItemToCart(String userUUID, CartItem product) {
 
-        ShoppingCart shoppingCart = new ShoppingCart("dat user", null);
-
+        ShoppingCart shoppingCart = getCart(userUUID);
+        if (shoppingCart == null){
+            List<CartItem> items = new ArrayList<>();
+            items.add(product);
+            shoppingCart = new ShoppingCart(userUUID, items);
+        } else {
+            shoppingCart.getProductsInCart().add(product);
+        }
         cartRedisRepository.add(shoppingCart);
+        return cartRedisRepository.findCart(userUUID);
     }
 
     @Override
