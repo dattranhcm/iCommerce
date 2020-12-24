@@ -32,6 +32,14 @@ services:
     hostname: redis
     ports:
       - "6379:6379"
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    ports:
+      - 27017:27017
 #  mysql-db:
 #    build: docker/postgres
 #    ports:
@@ -69,3 +77,9 @@ services:
       - 8083:8080
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+  tracking-service:
+    build: icommerce-tracking-service
+    links:
+      - kafka
+    ports:
+      - 8084:8080

@@ -85,3 +85,15 @@ postgres_1       | psql:/docker-entrypoint-initdb.d/create_user_table.sql:1: ERR
 
 #7
 redis.clients.jedis.exceptions.JedisConnectionException: Failed connecting to localhost:6379
+>> change the host to redis container name
+
+#8[Mongo]
+com.mongodb.MongoCommandException: Command failed with error 13 (Unauthorized): 'command insert requires authentication' on server mongo:27017. The full response is {"ok": 0.0, "errmsg": "command insert requires authentication", "code": 13, "codeName": "Unauthorized"}
+>> need to define an Icommerce Exception
+>> solution: add
+    spring.data.mongodb.username=admin
+    spring.data.mongodb.password=123456
+com.mongodb.MongoCommandException: Command failed with error 17 (ProtocolError): 'Attempt to switch database target during SASL authentication.' on server mongo:27017. The full response is {"ok": 0.0, "errmsg": "Attempt to switch database target during SASL authentication.", "code": 17, "codeName": "ProtocolError"}
+>> spring.data.mongodb.database=admin
+Query failed with error code 2 and error message 'Field 'locale' is invalid
+annotation used @Document(collation = "user-activity"), just remove the collection from the @Document annotation provided by spring-data and replace it with @Document("user-activity")

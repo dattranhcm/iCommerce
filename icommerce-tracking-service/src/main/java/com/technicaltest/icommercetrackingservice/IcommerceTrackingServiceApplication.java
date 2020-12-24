@@ -1,4 +1,4 @@
-package com.technicaltest.icommercetrackingservice.icommercetrackingservice;
+package com.technicaltest.icommercetrackingservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
