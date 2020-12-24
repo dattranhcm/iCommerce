@@ -28,7 +28,7 @@ public class UserActitiyService {
         return new ResponseEntity<CommonResponseBody>(
                 HTTPDataHelper.createSuccess(),
                 headerGenerator.getHeadersForSuccessGetMethod(),
-                HttpStatus.OK);
+                HttpStatus.CREATED);
     }
 
     @GetMapping("/user-activity-all")
