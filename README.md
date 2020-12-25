@@ -21,9 +21,11 @@ sudo docker-compose up postgres order-service
 
 ## http://localhost:8082/order-service/welcome
 ## http://localhost:8083/customer-service/welcome 
+## http://localhost:8084/tracking-service/welcome
+## http://localhost:8085/product-service/welcome 
 
-sudo docker rm icommerce_tracking-service_1
-sudo docker rmi icommerce_tracking-service
+sudo docker rm icommerce_product-service_1
+sudo docker rmi icommerce_product-service
 mvn clean package -Dmaven.test.skip=true
-sudo docker-compose build tracking-service
-sudo docker-compose up tracking-service
+sudo docker-compose build product-service
+sudo docker-compose up product-service

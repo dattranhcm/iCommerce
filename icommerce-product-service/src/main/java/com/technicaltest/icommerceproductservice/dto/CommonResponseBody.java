@@ -1,4 +1,4 @@
-package com.technicaltest.icommerceorderservice.dto;
+package com.technicaltest.icommerceproductservice.dto;
 
 public class CommonResponseBody {
     private Integer code;
