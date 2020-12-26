@@ -30,7 +30,7 @@ public class ProductServiceClient {
     public Mono<Object> getProductDetail(List<String> code) {
         return webClientBuilder.build()
                 .get()
-                .uri(hostname + "/product?codes=" + code)
+                .uri(hostname + "/product?codes=" + String.join(",", code))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .retrieve()
                 .bodyToMono(Object.class);
