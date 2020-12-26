@@ -1,16 +1,18 @@
 package com.technicaltest.icommerceproductservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "t_products")
-public class TProduct {
+public class TProduct implements Serializable {
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -26,7 +28,8 @@ public class TProduct {
     @NotNull
     private String productCode;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<TProductPrice> price;
 
     @Column(name = "created_at")

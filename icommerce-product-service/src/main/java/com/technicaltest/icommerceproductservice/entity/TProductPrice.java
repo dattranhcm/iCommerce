@@ -1,21 +1,25 @@
 package com.technicaltest.icommerceproductservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @Table(name = "t_product_price")
-public class TProductPrice {
+public class TProductPrice implements Serializable {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "product_uuid")
     @NotNull
+    @JsonBackReference
     private TProduct product;
 
     @Column(name = "price")

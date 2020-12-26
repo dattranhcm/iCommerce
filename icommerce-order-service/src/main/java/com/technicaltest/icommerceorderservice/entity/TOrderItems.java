@@ -1,5 +1,7 @@
 package com.technicaltest.icommerceorderservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -12,8 +14,9 @@ public class TOrderItems {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "order_uuid")
+    @JsonBackReference
     private TOrder order;
 
     @Column(name = "item_uuid")

@@ -39,7 +39,7 @@ public class OrderService {
                 HttpStatus.CREATED);
     }
 
-    @GetMapping("/order-detail/{id}")
+    @GetMapping("/order-detail/{uuid}")
     public List<TOrder> getOrderDetail(@PathVariable(value = "uuid") UUID orderUuid) {
         return orderServiceBean.findOrderByUuid(orderUuid);
     }

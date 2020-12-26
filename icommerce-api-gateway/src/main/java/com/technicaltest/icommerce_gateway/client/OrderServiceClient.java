@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.UUID;
+
 @Component
 @RequiredArgsConstructor
 public class OrderServiceClient {
@@ -25,10 +27,10 @@ public class OrderServiceClient {
                 .bodyToMono(String.class);
     }
 
-    public Mono<Object> orderDetailByID(Long id) {
+    public Mono<Object> orderDetailByID(String uuid) {
         return webClientBuilder.build()
                 .get()
-                .uri(hostname + "order-detail/" + id)
+                .uri(hostname + "order-detail/" + uuid)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .retrieve()
                 .bodyToMono(Object.class);

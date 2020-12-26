@@ -3,7 +3,10 @@ package com.technicaltest.icommerceproductservice.service;
 import com.technicaltest.icommerceproductservice.bean.ProductServiceBean;
 import com.technicaltest.icommerceproductservice.dto.ProductResponse;
 import com.technicaltest.icommerceproductservice.entity.TProduct;
+import com.technicaltest.icommerceproductservice.support.HTTPDataHelper;
 import com.technicaltest.icommerceproductservice.support.HeaderGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/product-service")
 public class ProductService {
-
+    private final Logger logger = LoggerFactory.getLogger(ProductService.class);
     @Autowired
     private ProductServiceBean productServiceBean;
 
@@ -26,21 +29,11 @@ public class ProductService {
         return "Welcome to Product service";
     }
 
-    @GetMapping("/product2/{code}")
-    public Object findProductByCode2(@PathVariable(name = "code") String productCode) {
-        TProduct result = productServiceBean.getProductInfoByCode(productCode);
-        return result;
-    }
-
-    @GetMapping("/product-all2")
-    public Object fetchAllProduct2() {
-        List<TProduct> result = productServiceBean.findAll();
-        return result;
-    }
-
-    @GetMapping("/product/{code}")
-    public ResponseEntity<ProductResponse> findProductByCode(@PathVariable(name = "code") String productCode) {
-        TProduct result = productServiceBean.getProductInfoByCode(productCode);
+    @GetMapping("/product")
+    public ResponseEntity<ProductResponse> findProductByCode(@RequestParam(name = "codes") List<String> productCodes) {
+        logger.info("Product service -> findProductByCode: OK");
+        List<TProduct> result = productServiceBean.getProductInfoByCode(productCodes);
+        logger.info(String.valueOf(result));
         if (result != null) {
             return new ResponseEntity<ProductResponse>(
                     new ProductResponse(0, "", result),
@@ -48,7 +41,7 @@ public class ProductService {
                     HttpStatus.OK);
         }
         return new ResponseEntity<ProductResponse>(
-                new ProductResponse(-1, "Not found product has code: " + productCode, null),
+                new ProductResponse(-1, "Not found product has code: " + productCodes, null),
                 headerGenerator.getHeadersForSuccessGetMethod(),
                 HttpStatus.OK);
     }

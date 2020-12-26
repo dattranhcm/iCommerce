@@ -2,9 +2,12 @@ package com.technicaltest.icommerceorderservice.services;
 
 import com.technicaltest.icommerceorderservice.bean.CartServiceBean;
 import com.technicaltest.icommerceorderservice.bean.OrderServiceBean;
+import com.technicaltest.icommerceorderservice.events.OrderKafkaListener;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartItem;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.ShoppingCart;
 import com.technicaltest.icommerceorderservice.support.HeaderGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +19,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/cart-service")
 public class CartService {
-
+    private final Logger logger = LoggerFactory.getLogger(CartService.class);
     @Autowired
     CartServiceBean cartServiceBean;
 
     @Autowired
     private HeaderGenerator headerGenerator;
+
+    @GetMapping("/welcome")
+    public String welcome() {
+        return "Welcome to Cart service";
+    }
 
     @PostMapping(value = "/add-cart")
     public ResponseEntity<ShoppingCart> addCart(@RequestHeader(value = "userID") String userUUID,
@@ -48,6 +56,29 @@ public class CartService {
                     HttpStatus.FOUND);
         }
         return new ResponseEntity<ShoppingCart>(
+                headerGenerator.getHeadersForError(),
+                HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping(value = "create-order")
+    public Object createOrder(@RequestHeader(value = "userID") String userUUID,
+                              @PathVariable(name = "cartID") String cartID) {
+        return null;
+    }
+
+    @GetMapping(value = "/fetchProductDetailByProductCode")
+    public ResponseEntity<Object> fetchProductDetailByProductCode(@RequestParam(name = "codes") List<String> productCodes) {
+        logger.info("fetchProductDetailByProductCode OK");
+        Object products = cartServiceBean.fetchProductDetailByProductCode(productCodes);
+        logger.info("result from cart service to order service");
+        logger.info(products.toString());
+        if(products != null) {
+            return new ResponseEntity<Object>(
+                    products,
+                    headerGenerator.getHeadersForSuccessGetMethod(),
+                    HttpStatus.FOUND);
+        }
+        return new ResponseEntity<Object>(
                 headerGenerator.getHeadersForError(),
                 HttpStatus.NOT_FOUND);
     }

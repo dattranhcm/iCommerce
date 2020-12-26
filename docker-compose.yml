@@ -50,6 +50,7 @@ services:
 #       MYSQL_PASSWORD: dbpass
   api-gateway:
     build: icommerce-api-gateway
+    container_name: api-gateway-service
     links:
       - kafka
       - postgres
@@ -79,12 +80,14 @@ services:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
   tracking-service:
     build: icommerce-tracking-service
+    container_name: tracking-service
     links:
       - kafka
     ports:
       - 8084:8080
   product-service:
     build: icommerce-product-service
+    container_name: product-service
     links:
       - kafka
     ports:

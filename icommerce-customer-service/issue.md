@@ -97,3 +97,6 @@ com.mongodb.MongoCommandException: Command failed with error 17 (ProtocolError):
 >> spring.data.mongodb.database=admin
 Query failed with error code 2 and error message 'Field 'locale' is invalid
 annotation used @Document(collation = "user-activity"), just remove the collection from the @Document annotation provided by spring-data and replace it with @Document("user-activity")
+
+#9 Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Infinite recursion (StackOverflowError)
+>> https://stackoverflow.com/questions/3325387/infinite-recursion-with-jackson-json-and-hibernate-jpa-issue

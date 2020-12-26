@@ -1,9 +1,13 @@
 package com.technicaltest.icommerceorderservice.bean;
 
+import com.technicaltest.icommerceorderservice.client.ProductServiceClient;
 import com.technicaltest.icommerceorderservice.entity.TOrder;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartItem;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartRedisRepository;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.ShoppingCart;
+import com.technicaltest.icommerceorderservice.services.CartService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +16,15 @@ import java.util.List;
 
 @Service
 public class CartServiceBeanImpl implements CartServiceBean {
-
+    private final Logger logger = LoggerFactory.getLogger(CartServiceBeanImpl.class);
     @Autowired
     private CartRedisRepository cartRedisRepository;
 
     @Autowired
     private OrderServiceBean orderServiceBean;
+
+    @Autowired
+    private ProductServiceClient productServiceClient;
 
     @Override
     public ShoppingCart addItemToCart(String userUUID, CartItem product) {
@@ -40,7 +47,7 @@ public class CartServiceBeanImpl implements CartServiceBean {
     }
 
     @Override
-    public TOrder createOrderFromCart(String userUUID) {
+    public Object createOrderFromCart(String userUUID) {
         ShoppingCart cart = getCart(userUUID);
         if (cart == null){
             return null;
@@ -48,6 +55,14 @@ public class CartServiceBeanImpl implements CartServiceBean {
 
         return null;
     }
+
+    @Override
+    public Object fetchProductDetailByProductCode(List<String> productCodes) {
+        logger.info("fetchProductDetailByProductCode BEAN");
+        logger.info(productCodes.toString());
+        return productServiceClient.fetchProductByCodes(productCodes);
+    }
+
 
 //    @Override
 //    public void deleteItemFromCart(String cartId, UUID productUuid) {
