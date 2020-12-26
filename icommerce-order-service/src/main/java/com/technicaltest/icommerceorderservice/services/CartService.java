@@ -1,11 +1,15 @@
 package com.technicaltest.icommerceorderservice.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.technicaltest.icommerceorderservice.bean.CartServiceBean;
 import com.technicaltest.icommerceorderservice.bean.OrderServiceBean;
 import com.technicaltest.icommerceorderservice.events.OrderKafkaListener;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartItem;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.ShoppingCart;
 import com.technicaltest.icommerceorderservice.support.HeaderGenerator;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cart-service")
+@RequiredArgsConstructor
 public class CartService {
     private final Logger logger = LoggerFactory.getLogger(CartService.class);
     @Autowired
@@ -67,20 +72,14 @@ public class CartService {
     }
 
     @GetMapping(value = "/fetchProductDetailByProductCode")
-    public ResponseEntity<Object> fetchProductDetailByProductCode(@RequestParam(name = "codes") List<String> productCodes) {
-        logger.info("fetchProductDetailByProductCode OK");
+    public Object fetchProductDetailByProductCode(@RequestParam(name = "codes") List<String> productCodes) throws JsonProcessingException {
+        logger.info("fetchProductDetailByProductCode OK with params: ");
+        ObjectMapper mapper = new ObjectMapper();
+        logger.info(mapper.writeValueAsString(productCodes));
         Object products = cartServiceBean.fetchProductDetailByProductCode(productCodes);
         logger.info("result from cart service to order service");
-        logger.info(products.toString());
-        if(products != null) {
-            return new ResponseEntity<Object>(
-                    products,
-                    headerGenerator.getHeadersForSuccessGetMethod(),
-                    HttpStatus.FOUND);
-        }
-        return new ResponseEntity<Object>(
-                headerGenerator.getHeadersForError(),
-                HttpStatus.NOT_FOUND);
+        logger.info(mapper.writeValueAsString(products));
+        return products;
     }
 //
 //    @PostMapping(value = "/cart", params = {"productId", "quantity"})

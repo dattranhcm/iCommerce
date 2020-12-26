@@ -1,5 +1,8 @@
 package com.technicaltest.icommerceorderservice.client;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.technicaltest.icommerceorderservice.bean.CartServiceBeanImpl;
 import com.technicaltest.icommerceorderservice.services.CartService;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHeaders;
@@ -10,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-
 import java.util.List;
 
 @Component
@@ -22,16 +24,27 @@ public class ProductServiceClient {
     @Autowired
     private WebClient.Builder webClientBuilder;
 
-    public Mono<Object> fetchProductByCodes(List<String> productCodes) {
-        logger.info(hostname + "product?codes=" + productCodes);
+    public Mono<Object> customerServiceWelcome() {
         return webClientBuilder.build()
                 .get()
-                .uri(hostname + "product?codes=" + productCodes)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .uri(hostname + "welcome")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE)
                 .retrieve()
                 .bodyToMono(Object.class);
     }
 
+    public Mono<Object> getProductDetail(List<String> code) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        logger.info(mapper.writeValueAsString(hostname + "product?codes=" + String.join(",", code)));
+        Mono<Object> rs = webClientBuilder.build()
+                .get()
+                .uri(hostname + "product?codes=" + String.join(",", code))
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .retrieve()
+                .bodyToMono(Object.class);
+        logger.info(mapper.writeValueAsString(rs));
+        return rs;
+    }
     void setHostname(String hostname) {
         this.hostname = hostname;
     }

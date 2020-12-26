@@ -1,5 +1,7 @@
 package com.technicaltest.icommerceproductservice.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.technicaltest.icommerceproductservice.bean.ProductServiceBean;
 import com.technicaltest.icommerceproductservice.dto.ProductResponse;
 import com.technicaltest.icommerceproductservice.entity.TProduct;
@@ -30,10 +32,12 @@ public class ProductService {
     }
 
     @GetMapping("/product")
-    public ResponseEntity<ProductResponse> findProductByCode(@RequestParam(name = "codes") List<String> productCodes) {
+    public ResponseEntity<ProductResponse> findProductByCode(@RequestParam(name = "codes") List<String> productCodes) throws JsonProcessingException {
         logger.info("Product service -> findProductByCode: OK");
+        ObjectMapper mapper = new ObjectMapper();
+        logger.info(mapper.writeValueAsString(productCodes));
         List<TProduct> result = productServiceBean.getProductInfoByCode(productCodes);
-        logger.info(String.valueOf(result));
+        logger.info(mapper.writeValueAsString(result));
         if (result != null) {
             return new ResponseEntity<ProductResponse>(
                     new ProductResponse(0, "", result),

@@ -1,5 +1,7 @@
 package com.technicaltest.icommerceorderservice.bean;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.technicaltest.icommerceorderservice.client.ProductServiceClient;
 import com.technicaltest.icommerceorderservice.entity.TOrder;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartItem;
@@ -57,10 +59,11 @@ public class CartServiceBeanImpl implements CartServiceBean {
     }
 
     @Override
-    public Object fetchProductDetailByProductCode(List<String> productCodes) {
+    public Object fetchProductDetailByProductCode(List<String> productCodes) throws JsonProcessingException {
         logger.info("fetchProductDetailByProductCode BEAN");
-        logger.info(productCodes.toString());
-        return productServiceClient.fetchProductByCodes(productCodes);
+        ObjectMapper mapper = new ObjectMapper();
+        logger.info(mapper.writeValueAsString(productCodes));
+        return productServiceClient.getProductDetail(productCodes);
     }
 
 
