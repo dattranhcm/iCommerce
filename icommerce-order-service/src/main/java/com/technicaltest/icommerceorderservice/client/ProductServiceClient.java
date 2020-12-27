@@ -3,6 +3,7 @@ package com.technicaltest.icommerceorderservice.client;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.technicaltest.icommerceorderservice.bean.CartServiceBeanImpl;
+import com.technicaltest.icommerceorderservice.dto.ProductResult;
 import com.technicaltest.icommerceorderservice.services.CartService;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHeaders;
@@ -33,15 +34,15 @@ public class ProductServiceClient {
                 .bodyToMono(Object.class);
     }
 
-    public Mono<Object> getProductDetail(List<String> code) throws JsonProcessingException {
+    public Mono<ProductResult> getProductDetail(List<String> code) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         logger.info(mapper.writeValueAsString(hostname + "product?codes=" + String.join(",", code)));
-        Mono<Object> rs = webClientBuilder.build()
+        Mono<ProductResult> rs = webClientBuilder.build()
                 .get()
                 .uri(hostname + "product?codes=" + String.join(",", code))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .retrieve()
-                .bodyToMono(Object.class);
+                .bodyToMono(ProductResult.class);
         logger.info(mapper.writeValueAsString(rs));
         return rs;
     }

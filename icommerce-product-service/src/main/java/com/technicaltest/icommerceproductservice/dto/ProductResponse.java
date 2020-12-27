@@ -1,9 +1,5 @@
 package com.technicaltest.icommerceproductservice.dto;
 
-import com.technicaltest.icommerceproductservice.entity.TProduct;
-
-import java.util.List;
-
 public class ProductResponse extends CommonResponseBody{
     private Object data;
 

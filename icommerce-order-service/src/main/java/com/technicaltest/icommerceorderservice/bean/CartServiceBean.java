@@ -1,6 +1,7 @@
 package com.technicaltest.icommerceorderservice.bean;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.technicaltest.icommerceorderservice.dto.ProductResult;
 import com.technicaltest.icommerceorderservice.entity.TOrder;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartItem;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.ShoppingCart;
@@ -11,7 +12,7 @@ public interface CartServiceBean {
     public ShoppingCart addItemToCart(String userUUID, CartItem product);
     public ShoppingCart getCart(String userUUID);
     public Object createOrderFromCart(String userUUID);
-    public Object fetchProductDetailByProductCode(List<String> productCodes) throws JsonProcessingException;
+    public ProductResult fetchProductDetailByProductCode(List<String> productCodes) throws JsonProcessingException;
 //    public void deleteItemFromCart(String cartId, UUID productUuid);
 //    public boolean checkIfItemIsExist(String cartId, UUID productUuid);
 //    public List<TProduct> getAllItemsFromCart(String cartId);

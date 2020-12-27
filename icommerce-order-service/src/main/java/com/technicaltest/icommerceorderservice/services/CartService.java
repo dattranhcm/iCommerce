@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.technicaltest.icommerceorderservice.bean.CartServiceBean;
 import com.technicaltest.icommerceorderservice.bean.OrderServiceBean;
+import com.technicaltest.icommerceorderservice.dto.ProductResult;
 import com.technicaltest.icommerceorderservice.events.OrderKafkaListener;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartItem;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.ShoppingCart;
@@ -72,11 +73,11 @@ public class CartService {
     }
 
     @GetMapping(value = "/fetchProductDetailByProductCode")
-    public Object fetchProductDetailByProductCode(@RequestParam(name = "codes") List<String> productCodes) throws JsonProcessingException {
+    public ProductResult fetchProductDetailByProductCode(@RequestParam(name = "codes") List<String> productCodes) throws JsonProcessingException {
         logger.info("fetchProductDetailByProductCode OK with params: ");
         ObjectMapper mapper = new ObjectMapper();
         logger.info(mapper.writeValueAsString(productCodes));
-        Object products = cartServiceBean.fetchProductDetailByProductCode(productCodes);
+        ProductResult products = cartServiceBean.fetchProductDetailByProductCode(productCodes);
         logger.info("result from cart service to order service");
         logger.info(mapper.writeValueAsString(products));
         return products;
