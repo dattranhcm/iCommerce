@@ -3,6 +3,8 @@ package com.technicaltest.icommerceorderservice.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.technicaltest.icommerceorderservice.bean.OrderServiceBean;
 import com.technicaltest.icommerceorderservice.dto.OrderResponse;
+import com.technicaltest.icommerceorderservice.dto.ProductDto;
+import com.technicaltest.icommerceorderservice.dto.ProductResult;
 import com.technicaltest.icommerceorderservice.entity.TOrder;
 import com.technicaltest.icommerceorderservice.support.HTTPDataHelper;
 import com.technicaltest.icommerceorderservice.support.HeaderGenerator;
@@ -31,14 +33,14 @@ public class OrderService {
         return "Welcome to Order service";
     }
 
-    @PostMapping("/order")
-    public ResponseEntity<OrderResponse> addActivity(@RequestBody TOrder order) throws JsonProcessingException {
-        OrderResponse orderResponse = orderServiceBean.createOrder(order);
-        return new ResponseEntity<OrderResponse>(
-                orderResponse,
-                headerGenerator.getHeadersForSuccessGetMethod(),
-                HttpStatus.CREATED);
-    }
+//    @PostMapping("/order")
+//    public ResponseEntity<OrderResponse> addActivity(@RequestBody List<ProductDto> productOnCart) throws JsonProcessingException {
+//        OrderResponse orderResponse = orderServiceBean.createOrder(productOnCart);
+//        return new ResponseEntity<OrderResponse>(
+//                orderResponse,
+//                headerGenerator.getHeadersForSuccessGetMethod(),
+//                HttpStatus.CREATED);
+//    }
 
     @GetMapping("/order-detail/{uuid}")
     public List<TOrder> getOrderDetail(@PathVariable(value = "uuid") UUID orderUuid) {

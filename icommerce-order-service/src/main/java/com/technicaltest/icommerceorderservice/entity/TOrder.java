@@ -19,7 +19,7 @@ public class TOrder {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
+    @Column(name = "uuid", columnDefinition = "BINARY(16)")
     private UUID uuid;
 
     @Column(name = "customer_id")
@@ -38,7 +38,7 @@ public class TOrder {
     private String status;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonManagedReference
+//    @JsonManagedReference
     private List<TOrderItems> orderItems;
 
     @Column(name = "created_at")

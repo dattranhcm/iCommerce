@@ -15,9 +15,11 @@ public class TOrderItems {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_uuid")
-    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional = false)
+    @JoinColumns({
+            @JoinColumn(name = "order_uuid", referencedColumnName = "uuid"),
+    })
+    @MapsId("uuid")
     private TOrder order;
 
     @Column(name = "item_uuid")

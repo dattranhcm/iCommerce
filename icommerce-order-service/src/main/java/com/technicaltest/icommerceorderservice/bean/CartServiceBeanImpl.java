@@ -67,26 +67,7 @@ public class CartServiceBeanImpl implements CartServiceBean {
         }
         List<String> productOnCart = cart.getProductsInCart().stream().map(CartItem::getProductCode).collect(Collectors.toList());
         ProductResult productResult = fetchProductDetailByProductCode(productOnCart);
-        TOrder order = new TOrder();
-        BigDecimal totalPrice = new BigDecimal(0);
-        List<TOrderItems> orderItems = new ArrayList<>();
-        for (ProductDto p: productResult.getData()) {
-            TOrderItems i = new TOrderItems();
-            i.setItemUuid(p.getUuid());
-            BigDecimal price = p.getPrice().stream().filter(c -> c.isCurrentPrice()).collect(Collectors.toList()).get(0).getPrice();
-            i.setItemPrice(price);
-            i.setSubOrderAmount(0);
-            i.setSubOrderStatus(SubOrderStatus.AVAILABLE.name());
-            i.setCreatedAt(new Date());
-            i.setUpdatedAt(new Date());
-            orderItems.add(i);
-        }
-
-        order.setTotalAmount(totalPrice);
-        order.setOrderItems(orderItems);
-        order.setCustomerId(UUID.fromString(userUUID));
-        order.setStatus(OrderStatus.INIT.name());
-        return orderServiceBean.createOrder(order);
+        return orderServiceBean.createOrder(userUUID ,productResult.getData());
     }
 
     @Override
