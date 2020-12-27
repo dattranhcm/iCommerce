@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.technicaltest.icommerceproductservice.bean.ProductServiceBean;
 import com.technicaltest.icommerceproductservice.dto.ProductResponse;
 import com.technicaltest.icommerceproductservice.entity.TProduct;
-import com.technicaltest.icommerceproductservice.support.HTTPDataHelper;
 import com.technicaltest.icommerceproductservice.support.HeaderGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

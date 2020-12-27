@@ -3,19 +3,29 @@ package com.technicaltest.icommerceorderservice.bean;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.technicaltest.icommerceorderservice.client.ProductServiceClient;
+import com.technicaltest.icommerceorderservice.dto.OrderResponse;
+import com.technicaltest.icommerceorderservice.dto.ProductDto;
+import com.technicaltest.icommerceorderservice.dto.ProductPriceDto;
 import com.technicaltest.icommerceorderservice.dto.ProductResult;
 import com.technicaltest.icommerceorderservice.entity.TOrder;
+import com.technicaltest.icommerceorderservice.entity.TOrderItems;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartItem;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartRedisRepository;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.ShoppingCart;
 import com.technicaltest.icommerceorderservice.services.CartService;
+import com.technicaltest.icommerceorderservice.support.OrderStatus;
+import com.technicaltest.icommerceorderservice.support.SubOrderStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CartServiceBeanImpl implements CartServiceBean {
@@ -50,13 +60,33 @@ public class CartServiceBeanImpl implements CartServiceBean {
     }
 
     @Override
-    public Object createOrderFromCart(String userUUID) {
+    public OrderResponse createOrderFromCart(String userUUID) throws JsonProcessingException {
         ShoppingCart cart = getCart(userUUID);
-        if (cart == null){
+        if (cart == null) {
             return null;
         }
+        List<String> productOnCart = cart.getProductsInCart().stream().map(CartItem::getProductCode).collect(Collectors.toList());
+        ProductResult productResult = fetchProductDetailByProductCode(productOnCart);
+        TOrder order = new TOrder();
+        BigDecimal totalPrice = new BigDecimal(0);
+        List<TOrderItems> orderItems = new ArrayList<>();
+        for (ProductDto p: productResult.getData()) {
+            TOrderItems i = new TOrderItems();
+            i.setItemUuid(p.getUuid());
+            BigDecimal price = p.getPrice().stream().filter(c -> c.isCurrentPrice()).collect(Collectors.toList()).get(0).getPrice();
+            i.setItemPrice(price);
+            i.setSubOrderAmount(0);
+            i.setSubOrderStatus(SubOrderStatus.AVAILABLE.name());
+            i.setCreatedAt(new Date());
+            i.setUpdatedAt(new Date());
+            orderItems.add(i);
+        }
 
-        return null;
+        order.setTotalAmount(totalPrice);
+        order.setOrderItems(orderItems);
+        order.setCustomerId(UUID.fromString(userUUID));
+        order.setStatus(OrderStatus.INIT.name());
+        return orderServiceBean.createOrder(order);
     }
 
     @Override

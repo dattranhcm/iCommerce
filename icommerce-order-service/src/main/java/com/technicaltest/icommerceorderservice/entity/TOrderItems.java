@@ -5,13 +5,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "t_order_items")
 public class TOrderItems {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -20,7 +21,7 @@ public class TOrderItems {
     private TOrder order;
 
     @Column(name = "item_uuid")
-    private String itemUuid;
+    private UUID itemUuid;
 
     @Column(name = "item_price")
     private BigDecimal itemPrice;
@@ -53,11 +54,11 @@ public class TOrderItems {
         this.order = order;
     }
 
-    public String getItemUuid() {
+    public UUID getItemUuid() {
         return itemUuid;
     }
 
-    public void setItemUuid(String itemUuid) {
+    public void setItemUuid(UUID itemUuid) {
         this.itemUuid = itemUuid;
     }
 

@@ -100,3 +100,6 @@ annotation used @Document(collation = "user-activity"), just remove the collecti
 
 #9 Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Infinite recursion (StackOverflowError)
 >> https://stackoverflow.com/questions/3325387/infinite-recursion-with-jackson-json-and-hibernate-jpa-issue
+
+#10 org.postgresql.util.PSQLException: ERROR: relation "hibernate_sequence" does not exist
+@GeneratedValue(strategy = GenerationType.IDENTITY) instead of @GeneratedValue

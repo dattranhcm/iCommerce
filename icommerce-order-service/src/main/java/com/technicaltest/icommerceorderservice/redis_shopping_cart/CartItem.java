@@ -6,10 +6,12 @@ import java.math.BigDecimal;
 public class CartItem implements Serializable {
     private String productUUID;
     private String productName;
+    private String productCode;
     private BigDecimal price;
 
-    public CartItem(String productUUID, String productName, BigDecimal price) {
+    public CartItem(String productUUID, String productCode, String productName, BigDecimal price) {
         this.productUUID = productUUID;
+        this.productCode = productCode;
         this.productName = productName;
         this.price = price;
     }
@@ -36,5 +38,13 @@ public class CartItem implements Serializable {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
     }
 }

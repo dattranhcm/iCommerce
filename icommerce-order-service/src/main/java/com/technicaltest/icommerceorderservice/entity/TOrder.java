@@ -12,14 +12,18 @@ import java.util.UUID;
 @Entity
 @Table(name = "t_order")
 public class TOrder {
+//    @Id
+//    @GeneratedValue(generator = "uuid")
+//    @GenericGenerator(name = "uuid", strategy = "uuid")
+//    @Column(name = "uuid", unique = true)
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
-    @Column(name = "uuid", unique = true)
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(columnDefinition = "BINARY(16)")
     private UUID uuid;
 
     @Column(name = "customer_id")
-    private String customerId;
+    private UUID customerId;
 
     @Column(name = "total_amount")
     private BigDecimal totalAmount;
@@ -55,11 +59,11 @@ public class TOrder {
         this.uuid = uuid;
     }
 
-    public String getCustomerId() {
+    public UUID getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(String customerId) {
+    public void setCustomerId(UUID customerId) {
         this.customerId = customerId;
     }
 

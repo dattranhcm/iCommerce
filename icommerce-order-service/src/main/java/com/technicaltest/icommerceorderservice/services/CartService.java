@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.technicaltest.icommerceorderservice.bean.CartServiceBean;
 import com.technicaltest.icommerceorderservice.bean.OrderServiceBean;
+import com.technicaltest.icommerceorderservice.dto.OrderResponse;
 import com.technicaltest.icommerceorderservice.dto.ProductResult;
 import com.technicaltest.icommerceorderservice.events.OrderKafkaListener;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartItem;
@@ -38,7 +39,7 @@ public class CartService {
     }
 
     @PostMapping(value = "/add-cart")
-    public ResponseEntity<ShoppingCart> addCart(@RequestHeader(value = "userID") String userUUID,
+    public ResponseEntity<ShoppingCart> addCart(@RequestHeader(value = "userUUID") String userUUID,
                                                 @RequestBody CartItem item){
         ShoppingCart cart =cartServiceBean.addItemToCart(userUUID, item);
         if(cart != null) {
@@ -53,7 +54,7 @@ public class CartService {
     }
 
     @GetMapping(value = "/cart")
-    public ResponseEntity<ShoppingCart> getCart(@RequestHeader(value = "userID") String userUUID){
+    public ResponseEntity<ShoppingCart> getCart(@RequestHeader(value = "userUUID") String userUUID){
         ShoppingCart cart = cartServiceBean.getCart(userUUID);
         if(cart != null) {
             return new ResponseEntity<ShoppingCart>(
@@ -66,10 +67,9 @@ public class CartService {
                 HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping(value = "create-order")
-    public Object createOrder(@RequestHeader(value = "userID") String userUUID,
-                              @PathVariable(name = "cartID") String cartID) {
-        return null;
+    @PostMapping(value = "/create-order")
+    public OrderResponse createOrder(@RequestParam(value = "userUUID") String userUUID) throws JsonProcessingException {
+        return cartServiceBean.createOrderFromCart(userUUID);
     }
 
     @GetMapping(value = "/fetchProductDetailByProductCode")

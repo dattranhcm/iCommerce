@@ -1,5 +1,6 @@
 package com.technicaltest.icommerceorderservice.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.technicaltest.icommerceorderservice.bean.OrderServiceBean;
 import com.technicaltest.icommerceorderservice.dto.OrderResponse;
 import com.technicaltest.icommerceorderservice.entity.TOrder;
@@ -31,8 +32,8 @@ public class OrderService {
     }
 
     @PostMapping("/order")
-    public ResponseEntity<OrderResponse> addActivity() {
-        OrderResponse orderResponse = orderServiceBean.createOrder(null);
+    public ResponseEntity<OrderResponse> addActivity(@RequestBody TOrder order) throws JsonProcessingException {
+        OrderResponse orderResponse = orderServiceBean.createOrder(order);
         return new ResponseEntity<OrderResponse>(
                 orderResponse,
                 headerGenerator.getHeadersForSuccessGetMethod(),
