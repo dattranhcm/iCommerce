@@ -5,13 +5,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.technicaltest.icommerce_gateway.bean.GatewayBean;
 import com.technicaltest.icommerce_gateway.common.CommonActivities;
 import com.technicaltest.icommerce_gateway.dto.*;
+import com.technicaltest.icommerce_gateway.helper.HeaderGenerator;
+import com.technicaltest.icommerce_gateway.helper.JWTHelper;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,93 +25,142 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/gateway-service")
 @RequiredArgsConstructor
-//@Tag(name = "user")
 public class GatewayService {
     private final Logger logger = LoggerFactory.getLogger(GatewayService.class);
+
     @Autowired
     private GatewayBean gatewayBean;
+
+    @Autowired
+    private HeaderGenerator headerGenerator;
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
     private ObjectMapper objectMapper;
-//
-//    @Autowired
-//    private ProductClient productClient;
-
-//    @Autowired
-//    private OrderClient orderClient;
-
-//    @Operation(description = "Xem danh sách User", responses = {
-//            @ApiResponse(content = @Content(array = @ArraySchema(schema = @Schema(implementation = String.class))), responseCode = "200") })
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode  = "200", description = "Thành công"),
-//            @ApiResponse(responseCode  = "401", description = "Chưa xác thực"),
-//            @ApiResponse(responseCode  = "403", description = "Truy cập bị cấm"),
-//            @ApiResponse(responseCode  = "404", description = "Không tìm thấy")
-//    })
-    @GetMapping("/welcome")
-    public String welcome() {
-        return "Welcome to gateway service";
-    }
 
     @PostMapping(value = "/customer-registration")
     public RegistrationResponse customerRegistration(@RequestBody RegistrationRequest registrationRequest) {
-        logger.info("GO: customerRegistration");
         return gatewayBean.customerRegistration(registrationRequest);
     }
 
     @GetMapping(value = "/login")
     public LoginResponse login(@RequestHeader(name = "facebook-id") String facebookID, @RequestHeader(name = "facebook-token") String facebookToken) {
-        logger.info("GO: login");
         return gatewayBean.login(facebookID, facebookToken);
     }
 
     @GetMapping(value = "/products")
-    public ProductResponse getProductByCodes(@RequestParam(value = "codes") List<String> codes) throws JsonProcessingException {
-        logger.info("GO: getProductByCodes");
+    public ResponseEntity<ProductResponse> getProductByCodes(@RequestHeader(name = "access-token") String jwtAccessToken,
+                                             @RequestParam(value = "codes") List<String> codes) throws IOException {
+        Claims claims = JWTHelper.decodeJWT(jwtAccessToken);
+        String customerUUID = claims.getSubject();
+        if (gatewayBean.checkCustomer(customerUUID).getCode() != 0) {
+            return new ResponseEntity<ProductResponse>(
+                    headerGenerator.getHeadersForSuccessGetMethod(),
+                    HttpStatus.UNAUTHORIZED);
+        }
+
         UserActivity userActivity = new UserActivity(UUID.randomUUID().toString(), CommonActivities.SEARCH.name(), String.join(",", codes));
-        String xx = objectMapper.writeValueAsString(userActivity);
-        logger.info("PREPARING SAVE " + xx);
-        customerActivityEvent(xx);
-        return gatewayBean.getProductInfoDetail(codes);
+        customerActivityEvent(objectMapper.writeValueAsString(userActivity));
+        return new ResponseEntity<ProductResponse>(
+                gatewayBean.getProductInfoDetail(codes),
+                headerGenerator.getHeadersForSuccessGetMethod(),
+                HttpStatus.OK);
     }
 
     @GetMapping(value = "/all-products")
-    public ProductResponse getAllProducts() {
-        logger.info("GO: getAllProducts");
-        return gatewayBean.getAllProducts();
+    public ResponseEntity<ProductResponse> getAllProducts(@RequestHeader(name = "access-token") String jwtAccessToken) throws IOException {
+        Claims claims = JWTHelper.decodeJWT(jwtAccessToken);
+        String customerUUID = claims.getSubject();
+        if (gatewayBean.checkCustomer(customerUUID).getCode() != 0) {
+            return new ResponseEntity<ProductResponse>(
+                    headerGenerator.getHeadersForSuccessGetMethod(),
+                    HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<ProductResponse>(
+                gatewayBean.getAllProducts(),
+                headerGenerator.getHeadersForSuccessGetMethod(),
+                HttpStatus.OK);
     }
 
     @GetMapping(value = "/order-detail")
-    public OrderResponse orderDetailByID(@RequestParam(name = "order-uuid") UUID uuid) {
-        return gatewayBean.orderDetailByID(uuid);
+    public ResponseEntity<OrderResponse> orderDetailByID(@RequestHeader(name = "access-token") String jwtAccessToken,
+                                         @RequestParam(name = "order-uuid") UUID uuid) throws IOException {
+        Claims claims = JWTHelper.decodeJWT(jwtAccessToken);
+        String customerUUID = claims.getSubject();
+        if (gatewayBean.checkCustomer(customerUUID).getCode() != 0) {
+            return new ResponseEntity<OrderResponse>(
+                    headerGenerator.getHeadersForSuccessGetMethod(),
+                    HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<OrderResponse>(
+                gatewayBean.orderDetailByID(uuid),
+                headerGenerator.getHeadersForSuccessGetMethod(),
+                HttpStatus.OK);
     }
 
     @GetMapping(value = "/order-detail-of-customer")
-    public OrderResponse orderDetailByCustomerUUID(@RequestHeader(name = "customer-uuid") UUID customerUUID) {
-        return gatewayBean.orderOfCustomerUUID(customerUUID);
+    public ResponseEntity<OrderResponse> orderDetailByCustomerUUID(@RequestHeader(name = "access-token") String jwtAccessToken) throws IOException {
+        Claims claims = JWTHelper.decodeJWT(jwtAccessToken);
+        String customerUUID = claims.getSubject();
+        if (gatewayBean.checkCustomer(customerUUID).getCode() != 0) {
+            return new ResponseEntity<OrderResponse>(
+                    headerGenerator.getHeadersForSuccessGetMethod(),
+                    HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<OrderResponse>(
+                gatewayBean.orderOfCustomerUUID(UUID.fromString(customerUUID)),
+                headerGenerator.getHeadersForSuccessGetMethod(),
+                HttpStatus.OK);
     }
 
     @PostMapping(value = "add-cart-item")
-    public ShoppingCart addCartItem(@RequestHeader(name = "customer-uuid") UUID customerUUID, @RequestBody CartItem cartItem) {
-//        try {
-//            customerActivityEvent(new UserActivity(customerUUID.toString(), CommonActivities.ADD_CART.name(), objectMapper.writeValueAsString(cartItem)).toString());
-//        } catch (JsonProcessingException ex) {
-//            logger.error(ex.getMessage());
-//        }
-        return gatewayBean.addCartItem(customerUUID.toString(), cartItem);
+    public ResponseEntity<ShoppingCart> addCartItem(@RequestHeader(name = "access-token") String jwtAccessToken,
+                                    @RequestBody CartItem cartItem) throws IOException {
+        Claims claims = JWTHelper.decodeJWT(jwtAccessToken);
+        String customerUUID = claims.getSubject();
+        if (gatewayBean.checkCustomer(customerUUID).getCode() != 0) {
+            return new ResponseEntity<ShoppingCart>(
+                    headerGenerator.getHeadersForSuccessGetMethod(),
+                    HttpStatus.UNAUTHORIZED);
+        }
+        UserActivity userActivity = new UserActivity(UUID.randomUUID().toString(), CommonActivities.ADD_CART.name(), objectMapper.writeValueAsString(cartItem));
+        customerActivityEvent(objectMapper.writeValueAsString(userActivity));
+        return new ResponseEntity<ShoppingCart>(
+                gatewayBean.addCartItem(customerUUID.toString(), cartItem),
+                headerGenerator.getHeadersForSuccessGetMethod(),
+                HttpStatus.OK);
     }
 
     @GetMapping("shopping-cart-of-customer")
-    public ShoppingCart getCartInfoByCustomerUUID(@RequestHeader(name = "customer-uuid") UUID customerUUID) {
-        return gatewayBean.getCartInfoByCustomerUUID(customerUUID.toString());
+    public ResponseEntity<ShoppingCart> getCartInfoByCustomerUUID(@RequestHeader(name = "access-token") String jwtAccessToken) throws IOException {
+        Claims claims = JWTHelper.decodeJWT(jwtAccessToken);
+        String customerUUID = claims.getSubject();
+        if (gatewayBean.checkCustomer(customerUUID).getCode() != 0) {
+            return new ResponseEntity<ShoppingCart>(
+                    headerGenerator.getHeadersForSuccessGetMethod(),
+                    HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<ShoppingCart>(
+                gatewayBean.getCartInfoByCustomerUUID(customerUUID.toString()),
+                headerGenerator.getHeadersForSuccessGetMethod(),
+                HttpStatus.OK);
     }
 
     @PostMapping("create-order")
-    public OrderResponse createOrderFromShoppingCart(@RequestHeader(name = "customer-uuid") UUID customerUUID) {
-        return gatewayBean.createOrderFromShoppingCart(customerUUID.toString());
+    public ResponseEntity<OrderResponse> createOrderFromShoppingCart(@RequestHeader(name = "access-token") String jwtAccessToken) throws IOException {
+        Claims claims = JWTHelper.decodeJWT(jwtAccessToken);
+        String customerUUID = claims.getSubject();
+        if (gatewayBean.checkCustomer(customerUUID).getCode() != 0) {
+            return new ResponseEntity<OrderResponse>(
+                    headerGenerator.getHeadersForSuccessGetMethod(),
+                    HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<OrderResponse>(
+                gatewayBean.createOrderFromShoppingCart(customerUUID.toString()),
+                headerGenerator.getHeadersForSuccessGetMethod(),
+                HttpStatus.OK);
     }
 
     private void customerActivityEvent(String userActivity) {

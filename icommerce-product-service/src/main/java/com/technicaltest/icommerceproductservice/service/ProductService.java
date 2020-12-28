@@ -19,49 +19,31 @@ import java.util.List;
 @RequestMapping("/product-service")
 public class ProductService {
     private final Logger logger = LoggerFactory.getLogger(ProductService.class);
+
     @Autowired
     private ProductServiceBean productServiceBean;
 
-    @Autowired
-    private HeaderGenerator headerGenerator;
-
-    @GetMapping("/welcome")
+    @GetMapping("/health")
     public String getAllUsers() {
-        return "Welcome to Product service";
+        return "Product service ready now";
     }
 
     @GetMapping("/product")
-    public ResponseEntity<ProductResponse> findProductByCode(@RequestParam(name = "codes") List<String> productCodes) throws JsonProcessingException {
-        logger.info("Product service -> findProductByCode: OK");
-        ObjectMapper mapper = new ObjectMapper();
-        logger.info(mapper.writeValueAsString(productCodes));
+    public ProductResponse findProductByCode(@RequestParam(name = "codes") List<String> productCodes) throws JsonProcessingException {
         List<TProduct> result = productServiceBean.getProductInfoByCode(productCodes);
-        logger.info(mapper.writeValueAsString(result));
         if (result != null) {
-            return new ResponseEntity<ProductResponse>(
-                    new ProductResponse(0, "", result),
-                    headerGenerator.getHeadersForSuccessGetMethod(),
-                    HttpStatus.OK);
+            return new ProductResponse(0, "", result);
         }
-        return new ResponseEntity<ProductResponse>(
-                new ProductResponse(-1, "Not found product has code: " + productCodes, null),
-                headerGenerator.getHeadersForSuccessGetMethod(),
-                HttpStatus.OK);
+        return new ProductResponse(-1, "Not found product has code: " + productCodes, null);
     }
 
     @GetMapping("/product-all")
-    public ResponseEntity<ProductResponse> fetchAllProduct() {
+    public ProductResponse fetchAllProduct() {
         List<TProduct> result = productServiceBean.findAll();
         if (result != null && result.size() > 0) {
-            return new ResponseEntity<ProductResponse>(
-                    new ProductResponse(0, "", result),
-                    headerGenerator.getHeadersForSuccessGetMethod(),
-                    HttpStatus.OK);
+            return new ProductResponse(0, "", result);
         }
-        return new ResponseEntity<ProductResponse>(
-                new ProductResponse(-1, "Not found any product", null),
-                headerGenerator.getHeadersForSuccessGetMethod(),
-                HttpStatus.OK);
+        return new ProductResponse(-1, "Not found any product", null);
     }
 
 }

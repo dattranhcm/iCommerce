@@ -1,7 +1,7 @@
 package com.technicaltest.icommerceuserservice.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.technicaltest.icommerceuserservice.bean.CustomerServiceBean;
+import com.technicaltest.icommerceuserservice.dto.CustomerResponse;
 import com.technicaltest.icommerceuserservice.dto.LoginResponse;
 import com.technicaltest.icommerceuserservice.dto.RegistrationRequest;
 import com.technicaltest.icommerceuserservice.dto.RegistrationResponse;
@@ -12,29 +12,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/customer-service")
 @RequiredArgsConstructor
 public class CustomerService {
+
     private final Logger logger = LoggerFactory.getLogger(CustomerService.class);
+
     @Autowired
     private CustomerServiceBean customerServiceBean;
 
-    @GetMapping("/welcome")
+    @GetMapping("/health")
     public String welcome() {
-        return "Welcome to Customer service";
+        return "Customer service ready now";
     }
 
     @PostMapping("/registration")
     public RegistrationResponse registration(@RequestBody RegistrationRequest requestBody) {
-        logger.info("GO: registration");
         return customerServiceBean.registration(requestBody);
     }
 
     @GetMapping("/login")
-    public LoginResponse loginByFacebook(@RequestHeader(name = "facebookID") String facebookID, @RequestHeader(name = "facebookToken") String facebookToken) throws IOException {
-        logger.info(String.format("facebookID %s, facebookToken %s", facebookID, facebookToken));
+    public LoginResponse loginByFacebook(@RequestHeader(name = "facebook-id") String facebookID, @RequestHeader(name = "facebook-token") String facebookToken) throws IOException {
         return customerServiceBean.loginByFacebook(facebookID, facebookToken);
+    }
+
+    @GetMapping("/check-customer")
+    public CustomerResponse loginByFacebook(@RequestHeader(name = "customer-uuid") UUID customerUUID) throws IOException {
+        return customerServiceBean.checkCustomerUUID(customerUUID);
     }
 }

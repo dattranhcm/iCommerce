@@ -1,6 +1,6 @@
 package com.technicaltest.icommerce_gateway.client;
 
-import com.technicaltest.icommerce_gateway.bean.GatewayBean;
+import com.technicaltest.icommerce_gateway.dto.CustomerResponse;
 import com.technicaltest.icommerce_gateway.dto.LoginResponse;
 import com.technicaltest.icommerce_gateway.dto.RegistrationRequest;
 import com.technicaltest.icommerce_gateway.dto.RegistrationResponse;
@@ -23,29 +23,28 @@ public class CustomerServiceClient {
     @Autowired
     private WebClient.Builder webClientBuilder;
 
-    public Mono<Object> customerServiceWelcome() {
-        return webClientBuilder.build()
-                .get()
-                .uri(hostname + "welcome")
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE)
-                .retrieve()
-                .bodyToMono(Object.class);
-    }
-
     public Mono<LoginResponse> loginByFacebook(String facebookID, String facebookToken) {
-        logger.info("GO: loginByFacebook " + facebookID + " " + facebookToken);
         return webClientBuilder.build()
                 .get()
                 .uri(hostname + "login")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header("facebookID", facebookID)
-                .header("facebookToken", facebookToken)
+                .header("facebook-id", facebookID)
+                .header("facebook-token", facebookToken)
                 .retrieve()
                 .bodyToMono(LoginResponse.class);
     }
 
+    public Mono<CustomerResponse> checkCustomer(String customerUUID) {
+        return webClientBuilder.build()
+                .get()
+                .uri(hostname + "check-customer")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .header("customer-uuid", customerUUID)
+                .retrieve()
+                .bodyToMono(CustomerResponse.class);
+    }
+
     public Mono<RegistrationResponse> registration(RegistrationRequest registrationRequest) {
-        logger.info("GO: registration ");
         return webClientBuilder.build()
                 .post()
                 .uri(hostname + "registration")

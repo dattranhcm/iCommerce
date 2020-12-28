@@ -2,9 +2,7 @@ package com.technicaltest.icommerceuserservice.bean;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.technicaltest.icommerceuserservice.dto.LoginResponse;
-import com.technicaltest.icommerceuserservice.dto.RegistrationRequest;
-import com.technicaltest.icommerceuserservice.dto.RegistrationResponse;
+import com.technicaltest.icommerceuserservice.dto.*;
 import com.technicaltest.icommerceuserservice.entity.TCustomer;
 import com.technicaltest.icommerceuserservice.helpper.JWTHelper;
 import com.technicaltest.icommerceuserservice.repository.CustomerRepository;
@@ -28,13 +26,19 @@ public class CustomerServiceBeanImpl implements CustomerServiceBean {
     private CustomerRepository customerRepository;
 
     @Override
-    public List<TCustomer> findByUuid(UUID uuid) {
-        return customerRepository.findByUuid(uuid);
+    public CustomerResponse checkCustomerUUID(UUID customerUUID) {
+        TCustomer tCustomer = customerRepository.findByUuid(customerUUID);
+        if (tCustomer == null) {
+            return new CustomerResponse(-1, "customer not found", null, null);
+        }
+        return new CustomerResponse(0, "find customer", null, tCustomer.getFacebookId());
     }
 
     @Override
     public RegistrationResponse registration(RegistrationRequest registrationRequest) {
-        logger.info("registration bean: ");
+        if (customerRepository.findByFacebookID(registrationRequest.getFacebookId()) != null) {
+            return new RegistrationResponse(-2, "Registration failed, user existed", null, null);
+        }
         try {
             TCustomer customer = new TCustomer();
             customer.setUserName(registrationRequest.getUserName());
@@ -54,20 +58,16 @@ public class CustomerServiceBeanImpl implements CustomerServiceBean {
         } catch (Exception ex) {
             logger.error(ex.getMessage());
         }
-        return new RegistrationResponse(0, "Registration failed", null, null);
+        return new RegistrationResponse(-1, "Registration failed", null, null);
     }
 
     @Override
     public LoginResponse loginByFacebook(String facebookID, String facebookToken) throws IOException {
-        logger.info("findByFacebookIdAndHashPassword: ");
         TCustomer customer = customerRepository.findByFacebookIdAndFacebookToken(facebookID, facebookToken);
-        ObjectMapper mapper = new ObjectMapper();
-        logger.info("result: " + mapper.writeValueAsString(customer));
         String jwt = JWTHelper.createJWT(customer.getUuid().toString());
-        logger.info("JWT: " + jwt);
         if (customer != null) {
-            return new LoginResponse(0, "Loggin success", null, jwt);
+            return new LoginResponse(0, "Login success", null, jwt);
         }
-        return new LoginResponse(-1, "Loggin false", null, null);
+        return new LoginResponse(-1, "Login false", null, null);
     }
 }

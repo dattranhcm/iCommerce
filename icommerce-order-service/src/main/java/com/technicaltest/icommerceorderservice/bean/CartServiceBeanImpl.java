@@ -67,47 +67,15 @@ public class CartServiceBeanImpl implements CartServiceBean {
         }
         List<String> productOnCart = cart.getProductsInCart().stream().map(CartItem::getProductCode).collect(Collectors.toList());
         ProductResult productResult = fetchProductDetailByProductCode(productOnCart);
-        return orderServiceBean.createOrder(userUUID ,productResult.getData());
+        OrderResponse createdOrder = orderServiceBean.createOrder(userUUID ,productResult.getData());
+        if (createdOrder != null) {
+            cartRedisRepository.delete(userUUID);
+        }
+        return createdOrder;
     }
 
     @Override
     public ProductResult fetchProductDetailByProductCode(List<String> productCodes) throws JsonProcessingException {
-        logger.info("fetchProductDetailByProductCode BEAN");
-        ObjectMapper mapper = new ObjectMapper();
-        logger.info(mapper.writeValueAsString(productCodes));
         return productServiceClient.getProductDetail(productCodes).block();
     }
-
-
-//    @Override
-//    public void deleteItemFromCart(String cartId, UUID productUuid) {
-//        List<TProduct> cart = (List) cartRedisRepository.getCart(cartId, TProduct.class);
-//        for(TProduct item : cart){
-//            if((item.getUuid()).equals(productUuid)){
-//                cartRedisRepository.deleteItemFromCart(cartId, item);
-//            }
-//        }
-//    }
-//
-//    @Override
-//    public boolean checkIfItemIsExist(String cartId, UUID productUuid) {
-//        List<TProduct> cart = (List) cartRedisRepository.getCart(cartId, TProduct.class);
-//        for(TProduct item : cart){
-//            if((item.getUuid()).equals(productUuid)){
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    @Override
-//    public List<TProduct> getAllItemsFromCart(String cartId) {
-//        List<TProduct> items = (List)cartRedisRepository.getCart(cartId, TProduct.class);
-//        return items;
-//    }
-//
-//    @Override
-//    public void deleteCart(String cartId) {
-//        cartRedisRepository.deleteCart(cartId);
-//    }
 }

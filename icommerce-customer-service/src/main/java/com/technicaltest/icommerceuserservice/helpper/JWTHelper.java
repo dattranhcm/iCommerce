@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class JWTHelper {
     @Value( "${jwt.secret}" )
-    private String jdbcUrl;
+    private String secretKey;
 
     public String generateJWT() {
         return "";

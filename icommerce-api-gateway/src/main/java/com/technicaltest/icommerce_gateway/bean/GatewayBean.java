@@ -14,30 +14,22 @@ import java.util.UUID;
 
 @Service
 public class GatewayBean {
+
     private final Logger logger = LoggerFactory.getLogger(GatewayBean.class);
 
-//    @Autowired
-//    private CustomerServiceClient customerServiceClient;
-//
-//    @Autowired
-//    private OrderServiceClient orderServiceClient;
-//
-//    @Autowired
-//    private ProductServiceClient productServiceClient;
-//
-//    @Autowired
-//    private ShoppingCartServiceClient shoppingCartServiceClient;
     @Autowired
     ClientFactory clientFactory;
 
     public RegistrationResponse customerRegistration(RegistrationRequest registrationRequest) {
-        logger.info("GO: customerRegistration");
         return clientFactory.getCustomerServiceClient().registration(registrationRequest).block();
     }
 
     public LoginResponse login(String facebookID, String facebookToken) {
-        logger.info("GO: login");
         return clientFactory.getCustomerServiceClient().loginByFacebook(facebookID, facebookToken).block();
+    }
+
+    public CustomerResponse checkCustomer(String customerUUID) {
+        return clientFactory.getCustomerServiceClient().checkCustomer(customerUUID).block();
     }
 
     public ProductResponse getProductInfoDetail(List<String> codes) {

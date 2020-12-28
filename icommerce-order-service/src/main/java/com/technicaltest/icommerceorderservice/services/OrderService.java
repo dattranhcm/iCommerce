@@ -33,15 +33,6 @@ public class OrderService {
         return "Welcome to Order service";
     }
 
-//    @PostMapping("/order")
-//    public ResponseEntity<OrderResponse> addActivity(@RequestBody List<ProductDto> productOnCart) throws JsonProcessingException {
-//        OrderResponse orderResponse = orderServiceBean.createOrder(productOnCart);
-//        return new ResponseEntity<OrderResponse>(
-//                orderResponse,
-//                headerGenerator.getHeadersForSuccessGetMethod(),
-//                HttpStatus.CREATED);
-//    }
-
     @GetMapping("/order-detail/{uuid}")
     public OrderResponse getOrderDetailByOrderUUID(@PathVariable(value = "uuid") UUID orderUuid) {
         return orderServiceBean.findOrderByUuid(orderUuid);
