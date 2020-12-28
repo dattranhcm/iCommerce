@@ -22,4 +22,4 @@ VALUES ('a518d032-45f3-11eb-b378-0242ac130002', 'dattran', 'e10adc3949ba59abbe56
 
 INSERT INTO t_customer(uuid, user_name, hash_password, first_name, last_name, email, mobile, user_type, is_active, facebook_id, facebook_token, address)
 VALUES ('299626c0-45f4-11eb-b378-0242ac130002', 'anthony', 'e10adc3949ba59abbe56e057f20f883e',
-'Le', 'Quan', 'anthony@gmail.com', '0393974888','CUSTOMER', true, 'trhoangdat@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '801 Nguyen Van Linh, Quan 7, TP HCM');
+'Le', 'Quan', 'anthony@gmail.com', '0393974888','CUSTOMER', true, 'anthony@gmail.com', 'e10adc3949ba59abbe56e057f20f883e', '801 Nguyen Van Linh, Quan 7, TP HCM');
