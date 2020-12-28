@@ -12,10 +12,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "t_order")
 public class TOrder {
-//    @Id
-//    @GeneratedValue(generator = "uuid")
-//    @GenericGenerator(name = "uuid", strategy = "uuid")
-//    @Column(name = "uuid", unique = true)
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -38,7 +34,6 @@ public class TOrder {
     private String status;
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @JsonManagedReference
     private List<TOrderItems> orderItems;
 
     @Column(name = "created_at")

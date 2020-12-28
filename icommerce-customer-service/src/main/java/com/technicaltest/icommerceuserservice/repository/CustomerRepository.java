@@ -11,5 +11,5 @@ import java.util.UUID;
 @RepositoryRestResource(exported = false)
 public interface CustomerRepository extends PagingAndSortingRepository<TCustomer, UUID> {
     List<TCustomer> findByUuid(UUID uuid);
-    TCustomer findByFacebookIdAndHashPassword(String facebookId, String hashPassword);
+    TCustomer findByFacebookIdAndFacebookToken(String facebookId, String hashPassword);
 }

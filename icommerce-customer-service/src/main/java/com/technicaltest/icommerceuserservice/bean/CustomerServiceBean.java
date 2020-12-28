@@ -1,14 +1,18 @@
 package com.technicaltest.icommerceuserservice.bean;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.technicaltest.icommerceuserservice.dto.LoginResponse;
 import com.technicaltest.icommerceuserservice.dto.RegistrationRequest;
+import com.technicaltest.icommerceuserservice.dto.RegistrationResponse;
 import com.technicaltest.icommerceuserservice.entity.TCustomer;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
 public interface CustomerServiceBean {
     List<TCustomer> findByUuid(UUID uuid);
-    Object registration(RegistrationRequest registrationRequest);
-    Object login(String userName, String password);
+    RegistrationResponse registration(RegistrationRequest registrationRequest);
+    LoginResponse loginByFacebook(String facebookID, String facebookToken) throws IOException;
 }

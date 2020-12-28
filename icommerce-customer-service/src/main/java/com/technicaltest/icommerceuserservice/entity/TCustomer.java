@@ -12,15 +12,15 @@ import java.util.UUID;
 public class TCustomer {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid")
-    @Column(name = "uuid", unique = true)
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(name = "uuid", columnDefinition = "BINARY(16)")
     private UUID uuid;
 
     @Column(name = "user_name")
     private String userName;
 
-    @Column(name = "hash_password")
+    @Column(name = "hash_password", nullable = true)
     private String hashPassword;
 
     @Column(name = "first_name")
@@ -33,7 +33,7 @@ public class TCustomer {
     @Email
     private String email;
 
-    @Column(name = "mobile")
+    @Column(name = "mobile", nullable = true)
     private String mobile;
 
     @Column(name = "facebook_id")
@@ -46,9 +46,9 @@ public class TCustomer {
     private String userType;
 
     @Column(name = "is_active")
-    private String isActive;
+    private Boolean isActive;
 
-    @Column(name = "address")
+    @Column(name = "address", nullable = true)
     private String address;
 
     @Column(name = "created_at")
@@ -141,11 +141,11 @@ public class TCustomer {
         this.userType = userType;
     }
 
-    public String getIsActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(String isActive) {
+    public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
 
