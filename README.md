@@ -74,8 +74,8 @@ Response
 
 #2.1
 curl --location --request GET 'http://localhost:8081/gateway-service/products?codes=IP12MN,IP12BLU' \
---header 'facebook-id: tai.nguyen@gmail.com' \
---header 'facebook-token: e10adc3949ba59abbe56e05711111111'
+--header 'facebook-id: trhoangdat@gmail.com' \
+--header 'facebook-token: e10adc3949ba59abbe56e057f20f883e'
 Response
 {
     "code": 0,
