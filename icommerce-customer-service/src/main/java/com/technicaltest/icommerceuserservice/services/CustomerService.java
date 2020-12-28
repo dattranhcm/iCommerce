@@ -28,6 +28,7 @@ public class CustomerService {
 
     @PostMapping("/registration")
     public RegistrationResponse registration(@RequestBody RegistrationRequest requestBody) {
+        logger.info("GO: registration");
         return customerServiceBean.registration(requestBody);
     }
 

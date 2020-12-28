@@ -22,7 +22,7 @@ public class OrderKafkaListener {
     @KafkaListener(topics = "order")
     public void order(String orderUUID, Acknowledgment acknowledgment) throws JsonProcessingException {
         log.info("OrderKafkaListener CONSUME:" + orderUUID);
-        TOrder newInitOrder = orderRepository.findByUuid(UUID.fromString(orderUUID)).get(0);
+        TOrder newInitOrder = orderRepository.findByUuid(UUID.fromString(orderUUID));
         ObjectMapper mapper = new ObjectMapper();
         log.info("Received order info JSON, PROCESSING: " + mapper.writeValueAsString(newInitOrder));
 ////        orderInfo.setStatus(OrderStatus.PROCESSING.name());

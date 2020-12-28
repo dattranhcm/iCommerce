@@ -76,8 +76,23 @@ public class OrderServiceBeanImpl implements OrderServiceBean{
     }
 
     @Override
-    public List<TOrder> findOrderByUuid(UUID uuid) {
-        return orderRepository.findByUuid(uuid);
+    public OrderResponse findOrderByUuid(UUID uuid) {
+        TOrder order = orderRepository.findByUuid(uuid);
+        if(order != null) {
+            return new OrderResponse(0, "found", order);
+        } else {
+            return new OrderResponse(-1, "not found customer", null);
+        }
+    }
+
+    @Override
+    public OrderResponse findOrderByCustomerUuid(UUID customerUuid) {
+        List<TOrder> order = orderRepository.findByCustomerId(customerUuid);
+        if(order != null) {
+            return new OrderResponse(0, "found", order);
+        } else {
+            return new OrderResponse(-1, "not found customer", null);
+        }
     }
 
     private void fireOrderCreatedEvent(String orderUUID) throws JsonProcessingException {

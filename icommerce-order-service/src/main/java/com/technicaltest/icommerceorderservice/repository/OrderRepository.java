@@ -10,5 +10,6 @@ import java.util.UUID;
 
 @RepositoryRestResource(exported = false)
 public interface OrderRepository extends PagingAndSortingRepository<TOrder, UUID> {
-    List<TOrder> findByUuid(@Param("uuid") UUID uuid);
+    TOrder findByUuid(UUID uuid);
+    List<TOrder> findByCustomerId(UUID customerUuid);
 }

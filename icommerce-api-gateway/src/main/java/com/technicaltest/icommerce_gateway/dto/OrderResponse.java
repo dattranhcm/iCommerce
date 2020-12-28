@@ -1,5 +1,4 @@
-package com.technicaltest.icommerceorderservice.dto;
-
+package com.technicaltest.icommerce_gateway.dto;
 
 public class OrderResponse extends CommonResponseBody {
     private Object data;

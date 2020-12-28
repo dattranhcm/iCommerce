@@ -1,5 +1,7 @@
 package com.technicaltest.icommerce_gateway.client;
 
+import com.technicaltest.icommerce_gateway.dto.OrderResponse;
+import com.technicaltest.icommerce_gateway.dto.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,22 +20,23 @@ public class ProductServiceClient {
     @Autowired
     private WebClient.Builder webClientBuilder;
 
-    public Mono<Object> customerServiceWelcome() {
-        return webClientBuilder.build()
-                .get()
-                .uri(hostname + "welcome")
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE)
-                .retrieve()
-                .bodyToMono(Object.class);
-    }
 
-    public Mono<Object> getProductDetail(List<String> code) {
+    public Mono<ProductResponse> getProductDetail(List<String> code) {
         return webClientBuilder.build()
                 .get()
                 .uri(hostname + "/product?codes=" + String.join(",", code))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .retrieve()
-                .bodyToMono(Object.class);
+                .bodyToMono(ProductResponse.class);
+    }
+
+    public Mono<ProductResponse> getAllProduct() {
+        return webClientBuilder.build()
+                .get()
+                .uri(hostname + "/product-all")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .retrieve()
+                .bodyToMono(ProductResponse.class);
     }
     void setHostname(String hostname) {
         this.hostname = hostname;

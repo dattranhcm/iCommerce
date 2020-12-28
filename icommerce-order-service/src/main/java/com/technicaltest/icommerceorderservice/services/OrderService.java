@@ -43,7 +43,12 @@ public class OrderService {
 //    }
 
     @GetMapping("/order-detail/{uuid}")
-    public List<TOrder> getOrderDetail(@PathVariable(value = "uuid") UUID orderUuid) {
+    public OrderResponse getOrderDetailByOrderUUID(@PathVariable(value = "uuid") UUID orderUuid) {
         return orderServiceBean.findOrderByUuid(orderUuid);
+    }
+
+    @GetMapping("/order-detail-by-customer/{customerUUID}")
+    public OrderResponse getOrderDetailByCustomerUUID(@PathVariable(value = "customerUUID") UUID customerUUID) {
+        return orderServiceBean.findOrderByCustomerUuid(customerUUID);
     }
 }

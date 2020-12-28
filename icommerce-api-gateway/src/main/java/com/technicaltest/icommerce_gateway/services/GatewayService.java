@@ -1,16 +1,10 @@
 package com.technicaltest.icommerce_gateway.services;
 
-//import io.swagger.v3.oas.annotations.Operation;
-//import io.swagger.v3.oas.annotations.media.ArraySchema;
-//import io.swagger.v3.oas.annotations.media.Content;
-//import io.swagger.v3.oas.annotations.media.Schema;
-//import io.swagger.v3.oas.annotations.responses.ApiResponse;
-//import io.swagger.v3.oas.annotations.responses.ApiResponses;
-//import io.swagger.v3.oas.annotations.tags.Tag;
 import com.technicaltest.icommerce_gateway.bean.GatewayBean;
-import com.technicaltest.icommerce_gateway.client.OrderClient;
-import com.technicaltest.icommerce_gateway.client.ProductClient;
+import com.technicaltest.icommerce_gateway.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +17,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 //@Tag(name = "user")
 public class GatewayService {
-
+    private final Logger logger = LoggerFactory.getLogger(GatewayService.class);
     @Autowired
     private GatewayBean gatewayBean;
 //
@@ -46,23 +40,53 @@ public class GatewayService {
         return "Welcome to gateway service";
     }
 
-    @GetMapping("/call-customer-service")
-    public Object callCustomerService() {
-        return gatewayBean.callCustomerServiceWelcome();
+    @PostMapping(value = "/customer-registration")
+    public RegistrationResponse customerRegistration(@RequestBody RegistrationRequest registrationRequest) {
+        logger.info("GO: customerRegistration");
+        return gatewayBean.customerRegistration(registrationRequest);
     }
 
-    @GetMapping("/call-order-service")
-    public Object callOrderService() {
-        return gatewayBean.callOrderServiceWelcome();
+    @GetMapping(value = "/login")
+    public LoginResponse login(@RequestHeader(name = "facebook-id") String facebookID, @RequestHeader(name = "facebook-token") String facebookToken) {
+        logger.info("GO: login");
+        return gatewayBean.login(facebookID, facebookToken);
     }
 
-    @GetMapping("/order-detail/{uuid}")
-    public Object orderDetail(@PathVariable(name = "uuid") String uuid) {
+    @GetMapping(value = "/products")
+    public ProductResponse getProductByCodes(@RequestParam(value = "codes") List<String> codes) {
+        logger.info("GO: getProductByCodes");
+        return gatewayBean.getProductInfoDetail(codes);
+    }
+
+    @GetMapping(value = "/all-products")
+    public ProductResponse getAllProducts() {
+        logger.info("GO: getAllProducts");
+        return gatewayBean.getAllProducts();
+    }
+
+    @GetMapping(value = "/order-detail")
+    public OrderResponse orderDetailByID(@RequestParam(name = "order-uuid") UUID uuid) {
         return gatewayBean.orderDetailByID(uuid);
     }
 
-    @GetMapping("/product")
-    public Object products(@RequestParam(name = "codes") List<String> codes) {
-        return gatewayBean.productDetailByCode(codes);
+    @GetMapping(value = "/order-detail-of-customer")
+    public OrderResponse orderDetailByCustomerUUID(@RequestHeader(name = "customer-uuid") UUID customerUUID) {
+        return gatewayBean.orderOfCustomerUUID(customerUUID);
     }
+
+    @PostMapping(value = "add-cart-item")
+    public ShoppingCart addCartItem(@RequestHeader(name = "customer-uuid") UUID customerUUID, @RequestBody CartItem cartItem) {
+        return gatewayBean.addCartItem(customerUUID.toString(), cartItem);
+    }
+
+    @GetMapping("shopping-cart-of-customer")
+    public ShoppingCart getCartInfoByCustomerUUID(@RequestHeader(name = "customer-uuid") UUID customerUUID) {
+        return gatewayBean.getCartInfoByCustomerUUID(customerUUID.toString());
+    }
+
+    @PostMapping("create-order")
+    public OrderResponse createOrderFromShoppingCart(@RequestHeader(name = "customer-uuid") UUID customerUUID) {
+        return gatewayBean.createOrderFromShoppingCart(customerUUID.toString());
+    }
+
 }

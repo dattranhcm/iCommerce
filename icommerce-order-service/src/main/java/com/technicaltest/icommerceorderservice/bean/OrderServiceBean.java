@@ -11,5 +11,6 @@ import java.util.UUID;
 
 public interface OrderServiceBean {
     public OrderResponse createOrder(String userUUID, List<ProductDto> productOnCart) throws JsonProcessingException;
-    public List<TOrder> findOrderByUuid(UUID uuid);
+    public OrderResponse findOrderByUuid(UUID uuid);
+    public OrderResponse findOrderByCustomerUuid(UUID customerUuid);
 }
