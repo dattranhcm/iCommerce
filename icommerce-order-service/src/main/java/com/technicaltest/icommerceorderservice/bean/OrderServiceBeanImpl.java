@@ -52,10 +52,6 @@ public class OrderServiceBeanImpl implements OrderServiceBean{
         order.setShipAddress("Any where in HCMC.");
         order.setCreatedAt(new Date());
         order.setUpdatedAt(new Date());
-        // Create order items
-
-        logger.info("PREPARING TO PERSIS ORDER AND ITEMS: " + mapper.writeValueAsString(order));
-
         TOrderItems i = new TOrderItems();
         i.setItemUuid(productOnCart.get(0).getUuid());
         BigDecimal price = productOnCart.get(0).getPrice().stream().filter(c -> c.isCurrentPrice()).collect(Collectors.toList()).get(0).getPrice();
@@ -67,11 +63,7 @@ public class OrderServiceBeanImpl implements OrderServiceBean{
         List<TOrderItems> ls = new ArrayList<>();
         ls.add(i);
         order.setOrderItems(ls);
-        logger.info("SUB ORDER CHUAN BI PERSIS : " + mapper.writeValueAsString(i));
         TOrder initOrder = orderRepository.saveAndFlush(order);
-
-       // TOrderItems orderItems = orderItemRepository.findById(findOrder.getOrderItems().get(0).getId());
-
         fireOrderCreatedEvent(initOrder.getUuid().toString());
         return HTTPDataHelper.orderResponse(initOrder);
     }
@@ -97,9 +89,6 @@ public class OrderServiceBeanImpl implements OrderServiceBean{
     }
 
     private void fireOrderCreatedEvent(String orderUUID) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        TOrder findOrder = orderRepository.findByUuid(UUID.fromString(orderUUID));
-        logger.info("ONE EVENT, ORDER FOUND AFTER PERSIS: " + mapper.writeValueAsString(findOrder));
         kafkaTemplate.send("order", orderUUID);
     }
 }
