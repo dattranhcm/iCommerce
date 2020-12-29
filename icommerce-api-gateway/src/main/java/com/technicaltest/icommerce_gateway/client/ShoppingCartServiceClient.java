@@ -24,7 +24,7 @@ public class ShoppingCartServiceClient {
                 .post()
                 .uri(hostname + "add-cart")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header("userUUID", customerUUID)
+                .header("customer-uuid", customerUUID)
                 .body(Mono.just(cartItem), CartItem.class)
                 .retrieve()
                 .bodyToMono(ShoppingCart.class);
@@ -35,7 +35,7 @@ public class ShoppingCartServiceClient {
                 .get()
                 .uri(hostname + "cart")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header("userUUID", customerUUID)
+                .header("customer-uuid", customerUUID)
                 .retrieve()
                 .bodyToMono(ShoppingCart.class);
     }
@@ -45,7 +45,7 @@ public class ShoppingCartServiceClient {
                 .post()
                 .uri(hostname + "create-order")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header("userUUID", customerUUID)
+                .header("customer-uuid", customerUUID)
                 .retrieve()
                 .bodyToMono(OrderResponse.class);
     }

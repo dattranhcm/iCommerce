@@ -68,7 +68,7 @@ public class OrderServiceBeanImpl implements OrderServiceBean{
             tOrderItemsList.add(i);
         }
         order.setOrderItems(tOrderItemsList);
-        TOrder initOrder = orderRepository.save(order);
+        TOrder initOrder = orderRepository.saveAndFlush(order);
         logger.info("OrderServiceBeanImpl INIT order");
         logger.info(mapper.writeValueAsString(initOrder));
         fireOrderCreatedEvent(initOrder.getUuid().toString());

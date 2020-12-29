@@ -50,7 +50,7 @@ public class CartService {
     }
 
     @PostMapping(value = "/create-order")
-    public OrderResponse createOrder(@RequestHeader(value = "userUUID") String userUUID) throws JsonProcessingException {
+    public OrderResponse createOrder(@RequestHeader(value = "customer-uuid") String userUUID) throws JsonProcessingException {
         return cartServiceBean.createOrderFromCart(userUUID);
     }
 }

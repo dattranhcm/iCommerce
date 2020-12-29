@@ -36,7 +36,7 @@ public class CustomerServiceBeanImpl implements CustomerServiceBean {
 
     @Override
     public RegistrationResponse registration(RegistrationRequest registrationRequest) {
-        if (customerRepository.findByFacebookID(registrationRequest.getFacebookId()) != null) {
+        if (customerRepository.findByFacebookId(registrationRequest.getFacebookId()) != null) {
             return new RegistrationResponse(-2, "Registration failed, user existed", null, null);
         }
         try {
