@@ -16,7 +16,7 @@ public class TOrderItems {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "order_uuid", referencedColumnName = "uuid", columnDefinition = "RAW(16)")
+    @JoinColumn(name = "order_uuid", referencedColumnName = "uuid", columnDefinition = "RAW(16)", insertable = false, updatable = false)
     private TOrder order;
 
     @Column(name = "item_uuid")

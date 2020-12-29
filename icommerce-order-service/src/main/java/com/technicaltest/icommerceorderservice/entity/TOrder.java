@@ -5,10 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "t_order")
@@ -34,8 +31,8 @@ public class TOrder {
     @Column(name = "status")
     private String status;
 
-    @OneToMany(targetEntity = TOrderItems.class, mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<TOrderItems> orderItems;
+    @OneToMany(targetEntity = TOrderItems.class, mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<TOrderItems> orderItems = new ArrayList<>();
 
     @Column(name = "created_at")
     private Date createdAt;
@@ -111,11 +108,11 @@ public class TOrder {
         this.updatedAt = updatedAt;
     }
 
-    public Set<TOrderItems> getOrderItems() {
+    public List<TOrderItems> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(Set<TOrderItems> orderItems) {
+    public void setOrderItems(List<TOrderItems> orderItems) {
         this.orderItems = orderItems;
     }
 }

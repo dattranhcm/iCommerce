@@ -56,15 +56,6 @@ public class OrderServiceBeanImpl implements OrderServiceBean{
 
         logger.info("PREPARING TO PERSIS ORDER AND ITEMS: " + mapper.writeValueAsString(order));
 
-    //    logger.info("SUB ITEMS: " + mapper.writeValueAsString(productOnCart));
-    //    for (ProductDto p: productOnCart) {
-
-        //    i.setOrder(order); // add thang nay ko add thang duoi >> chi co order table co data
-
-    //    }
-    //    order.setOrderItems(Collections.singleton(i)); // add thang nay thi error ko luu dc dua nao het
-        TOrder initOrder = orderRepository.saveAndFlush(order);
-
         TOrderItems i = new TOrderItems();
         i.setItemUuid(productOnCart.get(0).getUuid());
         BigDecimal price = productOnCart.get(0).getPrice().stream().filter(c -> c.isCurrentPrice()).collect(Collectors.toList()).get(0).getPrice();
@@ -73,11 +64,15 @@ public class OrderServiceBeanImpl implements OrderServiceBean{
         i.setSubOrderStatus(SubOrderStatus.AVAILABLE.name());
         i.setCreatedAt(new Date());
         i.setUpdatedAt(new Date());
-        i.setOrder(initOrder);
+        List<TOrderItems> ls = new ArrayList<>();
+        ls.add(i);
+        order.setOrderItems(ls);
         logger.info("SUB ORDER CHUAN BI PERSIS : " + mapper.writeValueAsString(i));
-        orderItemRepository.saveAndFlush(i);
+        TOrder initOrder = orderRepository.saveAndFlush(order);
 
-    //    fireOrderCreatedEvent(initOrder.getUuid().toString());
+       // TOrderItems orderItems = orderItemRepository.findById(findOrder.getOrderItems().get(0).getId());
+
+        fireOrderCreatedEvent(initOrder.getUuid().toString());
         return HTTPDataHelper.orderResponse(initOrder);
     }
 
@@ -102,6 +97,9 @@ public class OrderServiceBeanImpl implements OrderServiceBean{
     }
 
     private void fireOrderCreatedEvent(String orderUUID) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        TOrder findOrder = orderRepository.findByUuid(UUID.fromString(orderUUID));
+        logger.info("ONE EVENT, ORDER FOUND AFTER PERSIS: " + mapper.writeValueAsString(findOrder));
         kafkaTemplate.send("order", orderUUID);
     }
 }
