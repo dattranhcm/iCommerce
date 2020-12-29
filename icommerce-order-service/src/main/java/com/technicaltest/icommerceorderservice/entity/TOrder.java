@@ -5,8 +5,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -15,7 +16,7 @@ public class TOrder {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(name = "uuid", columnDefinition = "BINARY(16)")
+    @Column(name = "uuid", columnDefinition = "RAW(16)")
     private UUID uuid;
 
     @Column(name = "customer_id")
@@ -33,8 +34,8 @@ public class TOrder {
     @Column(name = "status")
     private String status;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<TOrderItems> orderItems;
+    @OneToMany(targetEntity = TOrderItems.class, mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<TOrderItems> orderItems;
 
     @Column(name = "created_at")
     private Date createdAt;
@@ -110,11 +111,11 @@ public class TOrder {
         this.updatedAt = updatedAt;
     }
 
-    public List<TOrderItems> getOrderItems() {
+    public Set<TOrderItems> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(List<TOrderItems> orderItems) {
+    public void setOrderItems(Set<TOrderItems> orderItems) {
         this.orderItems = orderItems;
     }
 }

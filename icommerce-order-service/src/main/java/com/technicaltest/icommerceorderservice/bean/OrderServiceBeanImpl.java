@@ -12,6 +12,7 @@ import com.technicaltest.icommerceorderservice.repository.OrderRepository;
 import com.technicaltest.icommerceorderservice.support.HTTPDataHelper;
 import com.technicaltest.icommerceorderservice.support.OrderStatus;
 import com.technicaltest.icommerceorderservice.support.SubOrderStatus;
+import org.hibernate.mapping.Collection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,23 +53,31 @@ public class OrderServiceBeanImpl implements OrderServiceBean{
         order.setCreatedAt(new Date());
         order.setUpdatedAt(new Date());
         // Create order items
-        List<TOrderItems> tOrderItemsList = new ArrayList<>();
-        for (ProductDto p: productOnCart) {
-            TOrderItems i = new TOrderItems();
-            i.setItemUuid(p.getUuid());
-            BigDecimal price = p.getPrice().stream().filter(c -> c.isCurrentPrice()).collect(Collectors.toList()).get(0).getPrice();
-            i.setItemPrice(price);
-            i.setSubOrderAmount(0);
-            i.setSubOrderStatus(SubOrderStatus.AVAILABLE.name());
-            i.setCreatedAt(new Date());
-            i.setUpdatedAt(new Date());
-            tOrderItemsList.add(i);
-        }
-        order.setOrderItems(tOrderItemsList);
+
+        logger.info("PREPARING TO PERSIS ORDER AND ITEMS: " + mapper.writeValueAsString(order));
+
+    //    logger.info("SUB ITEMS: " + mapper.writeValueAsString(productOnCart));
+    //    for (ProductDto p: productOnCart) {
+
+        //    i.setOrder(order); // add thang nay ko add thang duoi >> chi co order table co data
+
+    //    }
+    //    order.setOrderItems(Collections.singleton(i)); // add thang nay thi error ko luu dc dua nao het
         TOrder initOrder = orderRepository.saveAndFlush(order);
-        logger.info("OrderServiceBeanImpl INIT order");
-        logger.info(mapper.writeValueAsString(initOrder));
-        fireOrderCreatedEvent(initOrder.getUuid().toString());
+
+        TOrderItems i = new TOrderItems();
+        i.setItemUuid(productOnCart.get(0).getUuid());
+        BigDecimal price = productOnCart.get(0).getPrice().stream().filter(c -> c.isCurrentPrice()).collect(Collectors.toList()).get(0).getPrice();
+        i.setItemPrice(price);
+        i.setSubOrderAmount(0);
+        i.setSubOrderStatus(SubOrderStatus.AVAILABLE.name());
+        i.setCreatedAt(new Date());
+        i.setUpdatedAt(new Date());
+        i.setOrder(initOrder);
+        logger.info("SUB ORDER CHUAN BI PERSIS : " + mapper.writeValueAsString(i));
+        orderItemRepository.saveAndFlush(i);
+
+    //    fireOrderCreatedEvent(initOrder.getUuid().toString());
         return HTTPDataHelper.orderResponse(initOrder);
     }
 
