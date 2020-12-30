@@ -47,8 +47,11 @@ Support very basic feature as below:
 - Docker
 - Docker Compose
 ### Build, Deploy project on local
-**Run the comment: bash exec.sh**
-**OR Run single comment if you want as below**
+**Run the comment: `bash exec.sh` (the script has comment to start project)**
+
+**OR**
+ 
+**Run single comment if you want as below**
 - ***Build project: mvn clean package -Dmaven.test.skip=true***
 - ***Build docker images/container: sudo docker-compose build***
 - ***Run docker containers: sudo docker-compose up***
