@@ -14,7 +14,7 @@ import java.util.List;
 @Component
 public class ProductServiceClient {
 
-    @Value("icommerce.url.product-service")
+    @Value("${icommerce.url.product-service}")
     private String hostname;
 
     @Autowired

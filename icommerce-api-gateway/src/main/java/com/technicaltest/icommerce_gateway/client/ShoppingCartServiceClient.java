@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class ShoppingCartServiceClient {
 
-    @Value("icommerce.url.cart-service")
+    @Value("${icommerce.url.cart-service}")
     private String hostname;
 
     @Autowired

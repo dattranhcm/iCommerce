@@ -16,8 +16,12 @@ import java.util.UUID;
 @Service
 public class CustomerServiceBeanImpl implements CustomerServiceBean {
     private final Logger logger = LoggerFactory.getLogger(CustomerServiceBeanImpl.class);
+
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private JWTHelper jwtHelper;
 
     @Override
     public CustomerResponse checkCustomerUUID(UUID customerUUID) {
@@ -25,7 +29,8 @@ public class CustomerServiceBeanImpl implements CustomerServiceBean {
         if (tCustomer == null) {
             return new CustomerResponse(-1, "customer not found", null, null);
         }
-        return new CustomerResponse(0, "find customer", null, tCustomer.getFacebookId());
+        return new CustomerResponse(0, "find customer", null,
+                new CustomerInfo(tCustomer.getFirstName(), tCustomer.getAddress(), tCustomer.getFacebookId(), tCustomer.getUserName()));
     }
 
     @Override
@@ -58,7 +63,7 @@ public class CustomerServiceBeanImpl implements CustomerServiceBean {
     @Override
     public LoginResponse loginByFacebook(String facebookID, String facebookToken) throws IOException {
         TCustomer customer = customerRepository.findByFacebookIdAndFacebookToken(facebookID, facebookToken);
-        String jwt = JWTHelper.createJWT(customer.getUuid().toString());
+        String jwt = jwtHelper.createJWT(customer.getUuid().toString());
         if (customer != null) {
             return new LoginResponse(0, "Login success", null, jwt);
         }

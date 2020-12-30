@@ -1,9 +1,9 @@
 package com.technicaltest.icommerceuserservice.dto;
 
 public class CustomerResponse extends CommonResponseBody {
-    private String data;
+    private CustomerInfo data;
     public CustomerResponse(){}
-    public CustomerResponse(Integer code, String content, String message, String data) {
+    public CustomerResponse(Integer code, String content, String message, CustomerInfo data) {
         super();
         this.setCode(code);
         this.setContent(content);
@@ -11,11 +11,11 @@ public class CustomerResponse extends CommonResponseBody {
         this.data = data;
     }
 
-    public String getData() {
+    public CustomerInfo getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(CustomerInfo data) {
         this.data = data;
     }
 }

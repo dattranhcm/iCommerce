@@ -4,7 +4,6 @@ import com.technicaltest.icommerce_gateway.dto.CustomerResponse;
 import com.technicaltest.icommerce_gateway.dto.LoginResponse;
 import com.technicaltest.icommerce_gateway.dto.RegistrationRequest;
 import com.technicaltest.icommerce_gateway.dto.RegistrationResponse;
-import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHeaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,8 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class CustomerServiceClient {
-    @Value("icommerce.url.customer-service")
+    private final Logger logger = LoggerFactory.getLogger(CustomerServiceClient.class);
+    @Value("${icommerce.url.customer-service}")
     private String hostname;
 
     @Autowired
@@ -45,6 +45,7 @@ public class CustomerServiceClient {
     }
 
     public Mono<RegistrationResponse> registration(RegistrationRequest registrationRequest) {
+        logger.info("hostname is " + hostname);
         return webClientBuilder.build()
                 .post()
                 .uri(hostname + "registration")

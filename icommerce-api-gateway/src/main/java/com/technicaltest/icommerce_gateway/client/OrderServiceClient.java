@@ -15,7 +15,7 @@ import java.util.UUID;
 @Component
 public class OrderServiceClient {
 
-    @Value("icommerce.url.order-service")
+    @Value("${icommerce.url.order-service}")
     private String hostname;
 
     @Autowired

@@ -20,7 +20,7 @@ import java.util.List;
 public class ProductServiceClient {
     private final Logger logger = LoggerFactory.getLogger(ProductServiceClient.class);
 
-    @Value("icommerce.url.product-service")
+    @Value("${icommerce.url.product-service}")
     private String hostname;
 
     @Autowired

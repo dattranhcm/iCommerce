@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * @Description
+ *  Provide API to fetching raw data that storage in MONGO DB serve for tracking user activity
+ * @Author Dat Tran
+ */
 @RestController
 @RequestMapping("/tracking-service")
 public class UserActitiyService {
@@ -45,9 +50,9 @@ public class UserActitiyService {
                 HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/user/user-activity")
-    public ResponseEntity<List<UserActivity>> findByUserName(@RequestParam(name = "user")String userName) {
-        List<UserActivity> result = userActivityServiceBean.findByUserName(userName);
+    @GetMapping("/by-customer/{customerName}")
+    public ResponseEntity<List<UserActivity>> findByUserName(@PathVariable(name = "customerName") String customerName) {
+        List<UserActivity> result = userActivityServiceBean.findByUserName(customerName);
         if(result != null) {
             return new ResponseEntity<List<UserActivity>>(
                     result,
@@ -59,8 +64,8 @@ public class UserActitiyService {
                 HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/activity/user-activity/")
-    public ResponseEntity<List<UserActivity>> findByActivityName(@RequestParam(name = "activity") String activityName) {
+    @GetMapping("/by-activity/{activity}")
+    public ResponseEntity<List<UserActivity>> findByActivityName(@PathVariable(name = "activity") String activityName) {
         List<UserActivity> result = userActivityServiceBean.findByUserActivity(activityName);
         if(result != null) {
             return new ResponseEntity<List<UserActivity>>(
@@ -72,5 +77,4 @@ public class UserActitiyService {
                 headerGenerator.getHeadersForError(),
                 HttpStatus.NOT_FOUND);
     }
-
 }

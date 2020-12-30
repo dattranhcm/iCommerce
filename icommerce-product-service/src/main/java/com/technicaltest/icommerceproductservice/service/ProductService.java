@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * @Description
+ *  Provide api to fetch product information
+ * @Author Dat Tran
+ */
 @RestController
 @RequestMapping("/product-service")
 public class ProductService {

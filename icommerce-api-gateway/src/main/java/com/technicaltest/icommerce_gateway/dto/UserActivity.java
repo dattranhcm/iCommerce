@@ -3,20 +3,24 @@ package com.technicaltest.icommerce_gateway.dto;
 import java.io.Serializable;
 
 public class UserActivity implements Serializable {
-    private String userUUID;
+    private String userName;
     private String activityName;
     private String actionContent;
 
     public UserActivity() {}
 
-    public UserActivity(String userUUID, String activityName, String actionContent) {
-        this.userUUID = userUUID;
+    public UserActivity(String userName, String activityName, String actionContent) {
+        this.userName = userName;
         this.activityName = activityName;
         this.actionContent = actionContent;
     }
 
-    public void setUserUUID(String userUUID) {
-        this.userUUID = userUUID;
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public void setActivityName(String activityName) {
@@ -25,10 +29,6 @@ public class UserActivity implements Serializable {
 
     public void setActionContent(String actionContent) {
         this.actionContent = actionContent;
-    }
-
-    public String getUserUUID() {
-        return userUUID;
     }
 
     public String getActivityName() {

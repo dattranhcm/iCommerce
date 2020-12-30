@@ -5,13 +5,16 @@ import com.technicaltest.icommerceorderservice.bean.CartServiceBean;
 import com.technicaltest.icommerceorderservice.dto.OrderResponse;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartItem;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.ShoppingCart;
-import com.technicaltest.icommerceorderservice.support.HeaderGenerator;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * @Description
+ *  Allow api to add shopping cart, view shopping cart, create order from shopping cart
+ * @Author Dat Tran
+ */
 @RestController
 @RequestMapping("/cart-service")
 public class CartService {

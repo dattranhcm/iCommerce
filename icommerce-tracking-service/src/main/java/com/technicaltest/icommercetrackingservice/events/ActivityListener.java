@@ -25,7 +25,7 @@ public class ActivityListener {
 
     @KafkaListener(topics = "tracking-customer-activity")
     public void userActivityListener(String userActivityMessage , Acknowledgment acknowledgment) throws JsonProcessingException {
-        log.info("ActivityListener CONSUME mapper:" + userActivityMessage);
+        log.info("ActivityListener CONSUME: " + userActivityMessage);
         try {
             UserActivityMessage activityMessage = objectMapper.readValue(userActivityMessage, UserActivityMessage.class);
             UserActivity userActivity = new UserActivity();
@@ -35,7 +35,7 @@ public class ActivityListener {
             userActivityRepository.save(userActivity);
             acknowledgment.acknowledge();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("ActivityListener CONSUME ERROR: " + e.getMessage());
         }
 
     }

@@ -7,6 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
+/**
+ * @Description
+ * This API allow view order detail of customer
+ * @Author Dat Tran
+ */
 @RestController
 @RequestMapping("/order-service")
 @RequiredArgsConstructor

@@ -57,4 +57,8 @@ public class GatewayBean {
     public OrderResponse createOrderFromShoppingCart(String customerUUID) {
         return clientFactory.getShoppingCartServiceClient().createOrderFromShoppingCart(customerUUID).block();
     }
+
+    public Object getCustomerInfoByUUID(String customerUUID) {
+        return clientFactory.getCustomerServiceClient().checkCustomer(customerUUID);
+    }
 }

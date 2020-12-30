@@ -14,6 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.UUID;
 
+/**
+ * @Description
+ *  Customer service
+ *  Provide internal api for Registration, Login, Get Customer information
+ * @Author Dat Tran
+ */
 @RestController
 @RequestMapping("/customer-service")
 @RequiredArgsConstructor
