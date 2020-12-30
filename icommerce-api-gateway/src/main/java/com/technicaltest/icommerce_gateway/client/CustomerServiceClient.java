@@ -16,7 +16,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Component
-@RequiredArgsConstructor
 public class CustomerServiceClient {
     @Value("icommerce.url.customer-service")
     private String hostname;

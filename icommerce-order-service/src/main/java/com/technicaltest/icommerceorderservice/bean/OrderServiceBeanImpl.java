@@ -40,7 +40,6 @@ public class OrderServiceBeanImpl implements OrderServiceBean{
 
     @Override
     public OrderResponse createOrder(String userUUID ,List<ProductDto> productOnCart) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
         TOrder order = new TOrder();
         BigDecimal totalPrice = new BigDecimal(0);
         order.setTotalAmount(totalPrice);

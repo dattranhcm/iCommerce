@@ -13,7 +13,6 @@ import reactor.core.publisher.Mono;
 import java.util.UUID;
 
 @Component
-@RequiredArgsConstructor
 public class OrderServiceClient {
 
     @Value("icommerce.url.order-service")

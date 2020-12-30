@@ -52,7 +52,7 @@ public class CartServiceBeanImpl implements CartServiceBean {
     public OrderResponse createOrderFromCart(String userUUID) throws JsonProcessingException {
         ShoppingCart cart = getCart(userUUID);
         if (cart == null) {
-            return null;
+            return new OrderResponse(-2, "No item from your shopping cart.", null);
         }
         List<String> productOnCart = cart.getProductsInCart().stream().map(CartItem::getProductCode).collect(Collectors.toList());
         ProductResult productResult = fetchProductDetailByProductCode(productOnCart);

@@ -15,9 +15,9 @@ public class OrderService {
     @Autowired
     private OrderServiceBean orderServiceBean;
 
-    @GetMapping("/welcome")
+    @GetMapping("/health")
     public String getAllUsers() {
-        return "Welcome to Order service";
+        return "Order service is ready now";
     }
 
     @GetMapping("/order-detail/{uuid}")

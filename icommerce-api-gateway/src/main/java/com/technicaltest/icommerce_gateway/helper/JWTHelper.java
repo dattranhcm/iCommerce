@@ -21,28 +21,19 @@ public class JWTHelper {
         return "";
     }
     public static String createJWT(String subject) throws IOException {
-
-        //The JWT signature algorithm we will be using to sign the token
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
-
-        //We will sign our JWT with our ApiKey secret
         byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(secrectKey);
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
-
-        //Let's set the JWT Claims
         JwtBuilder builder = Jwts.builder()
                 .setIssuedAt(now)
                 .setSubject(subject)
                 .signWith(signatureAlgorithm, signingKey);
-        //Builds the JWT and serializes it to a compact, URL-safe string
         return builder.compact();
     }
 
     public static Claims decodeJWT(String jwt) throws IOException {
-        //Will has an exception if it is not a signed JWS (as expected)
         try {
             Claims claims = Jwts.parser()
                     .setSigningKey(DatatypeConverter.parseBase64Binary(secrectKey))

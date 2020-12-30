@@ -14,18 +14,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/cart-service")
-@RequiredArgsConstructor
 public class CartService {
     private final Logger logger = LoggerFactory.getLogger(CartService.class);
+
     @Autowired
     CartServiceBean cartServiceBean;
 
-    @Autowired
-    private HeaderGenerator headerGenerator;
-
-    @GetMapping("/welcome")
+    @GetMapping("/health")
     public String welcome() {
-        return "Welcome to Cart service";
+        return "Cart service is ready now";
     }
 
     @PostMapping(value = "/add-cart")

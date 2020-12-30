@@ -1,8 +1,6 @@
 package com.technicaltest.icommerce_gateway.client;
 
-import com.technicaltest.icommerce_gateway.dto.OrderResponse;
 import com.technicaltest.icommerce_gateway.dto.ProductResponse;
-import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +12,6 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 @Component
-@RequiredArgsConstructor
 public class ProductServiceClient {
 
     @Value("icommerce.url.product-service")

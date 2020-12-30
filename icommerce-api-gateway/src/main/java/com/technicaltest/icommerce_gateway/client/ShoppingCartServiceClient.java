@@ -3,7 +3,6 @@ package com.technicaltest.icommerce_gateway.client;
 import com.technicaltest.icommerce_gateway.dto.CartItem;
 import com.technicaltest.icommerce_gateway.dto.OrderResponse;
 import com.technicaltest.icommerce_gateway.dto.ShoppingCart;
-import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +12,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Component
-@RequiredArgsConstructor
 public class ShoppingCartServiceClient {
 
     @Value("icommerce.url.cart-service")
