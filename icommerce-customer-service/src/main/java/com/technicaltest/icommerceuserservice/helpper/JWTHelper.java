@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class JWTHelper {
     @Value( "${jwt.secret}" )
-    private String secretKey;
+    private static String secret;
 
     public String generateJWT() {
         return "";
@@ -28,10 +28,8 @@ public class JWTHelper {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
 
-        String secrectKey = "D6DC75171EB5449102FBF2C55E3C46655F3D2D651BBFFCF2936E5B43B1B9B436";
-
         //We will sign our JWT with our ApiKey secret
-        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(secrectKey);
+        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(secret);
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
         //Let's set the JWT Claims
@@ -44,11 +42,10 @@ public class JWTHelper {
     }
 
     public static Claims decodeJWT(String jwt) throws IOException {
-        String secrectKey = "D6DC75171EB5449102FBF2C55E3C46655F3D2D651BBFFCF2936E5B43B1B9B436";
         //Will has an exception if it is not a signed JWS (as expected)
         try {
             Claims claims = Jwts.parser()
-                    .setSigningKey(DatatypeConverter.parseBase64Binary(secrectKey))
+                    .setSigningKey(DatatypeConverter.parseBase64Binary(secret))
                     .parseClaimsJws(jwt).getBody();
             return claims;
         } catch (Exception e) {

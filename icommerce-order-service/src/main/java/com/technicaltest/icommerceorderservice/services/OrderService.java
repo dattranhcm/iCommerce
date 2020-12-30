@@ -1,20 +1,10 @@
 package com.technicaltest.icommerceorderservice.services;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.technicaltest.icommerceorderservice.bean.OrderServiceBean;
 import com.technicaltest.icommerceorderservice.dto.OrderResponse;
-import com.technicaltest.icommerceorderservice.dto.ProductDto;
-import com.technicaltest.icommerceorderservice.dto.ProductResult;
-import com.technicaltest.icommerceorderservice.entity.TOrder;
-import com.technicaltest.icommerceorderservice.support.HTTPDataHelper;
-import com.technicaltest.icommerceorderservice.support.HeaderGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,9 +14,6 @@ public class OrderService {
 
     @Autowired
     private OrderServiceBean orderServiceBean;
-
-    @Autowired
-    private HeaderGenerator headerGenerator;
 
     @GetMapping("/welcome")
     public String getAllUsers() {

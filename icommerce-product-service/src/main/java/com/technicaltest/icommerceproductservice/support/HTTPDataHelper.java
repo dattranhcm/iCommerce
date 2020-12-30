@@ -1,8 +1,6 @@
 package com.technicaltest.icommerceproductservice.support;
 
 import com.technicaltest.icommerceproductservice.dto.CommonResponseBody;
-import com.technicaltest.icommerceproductservice.dto.ProductResponse;
-import com.technicaltest.icommerceproductservice.entity.TProduct;
 
 public class HTTPDataHelper {
 

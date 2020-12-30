@@ -5,17 +5,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
 
-/**
- * Created by IntelliJ IDEA.
- * Project : spring-data-redis-example
- * User: hendisantika
- * Email: hendisantika@gmail.com
- * Telegram : @hendisantika34
- * Date: 02/12/17
- * Time: 19.55
- * To change this template use File | Settings | File Templates.
- */
-
 @Service
 public class MessagePublisherImpl implements MessagePublisher {
     @Autowired

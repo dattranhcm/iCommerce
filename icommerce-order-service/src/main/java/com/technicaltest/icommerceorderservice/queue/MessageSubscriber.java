@@ -7,17 +7,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by IntelliJ IDEA.
- * Project : spring-data-redis-example
- * User: hendisantika
- * Email: hendisantika@gmail.com
- * Telegram : @hendisantika34
- * Date: 02/12/17
- * Time: 19.56
- * To change this template use File | Settings | File Templates.
- */
-
 @Service
 public class MessageSubscriber implements MessageListener {
     public static List<String> messageList = new ArrayList<String>();

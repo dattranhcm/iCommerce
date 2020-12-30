@@ -5,6 +5,7 @@ import com.technicaltest.icommerce_gateway.dto.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -15,7 +16,9 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class ProductServiceClient {
-    private String hostname = "http://product-service:8080/product-service/";
+
+    @Value("icommerce.url.product-service")
+    private String hostname;
 
     @Autowired
     private WebClient.Builder webClientBuilder;

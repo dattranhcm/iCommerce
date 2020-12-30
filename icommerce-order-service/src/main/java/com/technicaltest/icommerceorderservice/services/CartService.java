@@ -1,13 +1,8 @@
 package com.technicaltest.icommerceorderservice.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.technicaltest.icommerceorderservice.bean.CartServiceBean;
-import com.technicaltest.icommerceorderservice.bean.OrderServiceBean;
 import com.technicaltest.icommerceorderservice.dto.OrderResponse;
-import com.technicaltest.icommerceorderservice.dto.ProductResult;
-import com.technicaltest.icommerceorderservice.events.OrderKafkaListener;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartItem;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.ShoppingCart;
 import com.technicaltest.icommerceorderservice.support.HeaderGenerator;
@@ -15,12 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 @RequestMapping("/cart-service")

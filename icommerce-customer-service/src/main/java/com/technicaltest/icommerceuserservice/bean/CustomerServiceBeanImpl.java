@@ -1,22 +1,16 @@
 package com.technicaltest.icommerceuserservice.bean;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.technicaltest.icommerceuserservice.dto.*;
 import com.technicaltest.icommerceuserservice.entity.TCustomer;
 import com.technicaltest.icommerceuserservice.helpper.JWTHelper;
 import com.technicaltest.icommerceuserservice.repository.CustomerRepository;
-import com.technicaltest.icommerceuserservice.services.CustomerService;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.security.provider.MD5;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @Service

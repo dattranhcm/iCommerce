@@ -9,6 +9,7 @@ import org.apache.http.HttpHeaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -17,8 +18,8 @@ import reactor.core.publisher.Mono;
 @Component
 @RequiredArgsConstructor
 public class CustomerServiceClient {
-    private final Logger logger = LoggerFactory.getLogger(CustomerServiceClient.class);
-    private String hostname = "http://customer-service:8080/customer-service/";
+    @Value("icommerce.url.customer-service")
+    private String hostname;
 
     @Autowired
     private WebClient.Builder webClientBuilder;

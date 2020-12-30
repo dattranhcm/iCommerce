@@ -15,7 +15,7 @@ import java.util.Date;
 
 public class JWTHelper {
     @Value( "${jwt.secret}" )
-    private String jdbcUrl;
+    private static String secrectKey;
 
     public String generateJWT() {
         return "";
@@ -27,8 +27,6 @@ public class JWTHelper {
 
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
-
-        String secrectKey = "D6DC75171EB5449102FBF2C55E3C46655F3D2D651BBFFCF2936E5B43B1B9B436";
 
         //We will sign our JWT with our ApiKey secret
         byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(secrectKey);
@@ -44,7 +42,6 @@ public class JWTHelper {
     }
 
     public static Claims decodeJWT(String jwt) throws IOException {
-        String secrectKey = "D6DC75171EB5449102FBF2C55E3C46655F3D2D651BBFFCF2936E5B43B1B9B436";
         //Will has an exception if it is not a signed JWS (as expected)
         try {
             Claims claims = Jwts.parser()
@@ -54,6 +51,19 @@ public class JWTHelper {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public static Boolean isValidToken(String jwt) throws IOException {
+        Claims claims = decodeJWT(jwt);
+        if (claims == null) {
+            return false;
+        }
+        String subject = claims.getSubject();
+        String expectedToken = createJWT(subject);
+        if (jwt.equals(expectedToken)) {
+            return true;
+        }
+        return false;
     }
 
 }

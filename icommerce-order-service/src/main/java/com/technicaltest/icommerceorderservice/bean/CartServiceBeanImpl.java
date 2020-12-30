@@ -1,30 +1,19 @@
 package com.technicaltest.icommerceorderservice.bean;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.technicaltest.icommerceorderservice.client.ProductServiceClient;
 import com.technicaltest.icommerceorderservice.dto.OrderResponse;
-import com.technicaltest.icommerceorderservice.dto.ProductDto;
-import com.technicaltest.icommerceorderservice.dto.ProductPriceDto;
 import com.technicaltest.icommerceorderservice.dto.ProductResult;
-import com.technicaltest.icommerceorderservice.entity.TOrder;
-import com.technicaltest.icommerceorderservice.entity.TOrderItems;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartItem;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartRedisRepository;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.ShoppingCart;
-import com.technicaltest.icommerceorderservice.services.CartService;
-import com.technicaltest.icommerceorderservice.support.OrderStatus;
-import com.technicaltest.icommerceorderservice.support.SubOrderStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service

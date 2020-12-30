@@ -6,6 +6,7 @@ import com.technicaltest.icommerce_gateway.dto.ShoppingCart;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -14,7 +15,9 @@ import reactor.core.publisher.Mono;
 @Component
 @RequiredArgsConstructor
 public class ShoppingCartServiceClient {
-    private String hostname = "http://order-service:8080/cart-service/";
+
+    @Value("icommerce.url.cart-service")
+    private String hostname;
 
     @Autowired
     private WebClient.Builder webClientBuilder;

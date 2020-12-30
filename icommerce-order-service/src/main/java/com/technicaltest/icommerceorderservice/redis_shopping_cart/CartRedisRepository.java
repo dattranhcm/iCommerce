@@ -1,11 +1,10 @@
 package com.technicaltest.icommerceorderservice.redis_shopping_cart;
 
-import java.util.Collection;
 import java.util.Map;
 
 public interface CartRedisRepository {
     /**
-     * Return all movies
+     * Return all shopping cart
      */
     Map<Object, Object> findAllCarts();
 
@@ -20,7 +19,7 @@ public interface CartRedisRepository {
     void delete(String id);
 
     /**
-     * find a movie
+     * Find a shopping cart in Redis.
      */
     ShoppingCart findCart(String id);
 }

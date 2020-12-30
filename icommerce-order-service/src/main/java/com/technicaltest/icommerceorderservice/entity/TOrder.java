@@ -1,6 +1,5 @@
 package com.technicaltest.icommerceorderservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

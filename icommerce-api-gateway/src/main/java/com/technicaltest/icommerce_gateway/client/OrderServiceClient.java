@@ -4,6 +4,7 @@ import com.technicaltest.icommerce_gateway.dto.OrderResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -14,7 +15,9 @@ import java.util.UUID;
 @Component
 @RequiredArgsConstructor
 public class OrderServiceClient {
-    private String hostname = "http://order-service:8080/order-service/";
+
+    @Value("icommerce.url.order-service")
+    private String hostname;
 
     @Autowired
     private WebClient.Builder webClientBuilder;
