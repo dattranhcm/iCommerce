@@ -1,13 +1,13 @@
 package com.technicaltest.icommerceorderservice.bean;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.technicaltest.icommerceorderservice.dto.OrderResponse;
 import com.technicaltest.icommerceorderservice.dto.ProductDto;
 import com.technicaltest.icommerceorderservice.entity.TOrder;
 import com.technicaltest.icommerceorderservice.entity.TOrderItems;
 import com.technicaltest.icommerceorderservice.repository.OrderItemRepository;
 import com.technicaltest.icommerceorderservice.repository.OrderRepository;
+import com.technicaltest.icommerceorderservice.support.Constant;
 import com.technicaltest.icommerceorderservice.support.HTTPDataHelper;
 import com.technicaltest.icommerceorderservice.support.OrderStatus;
 import com.technicaltest.icommerceorderservice.support.SubOrderStatus;
@@ -26,8 +26,6 @@ public class OrderServiceBeanImpl implements OrderServiceBean{
     private final Logger logger = LoggerFactory.getLogger(OrderServiceBeanImpl.class);
 
     private OrderRepository orderRepository;
-
-    private OrderItemRepository orderItemRepository;
 
     private KafkaTemplate<String, String> kafkaTemplate;
 
@@ -69,9 +67,9 @@ public class OrderServiceBeanImpl implements OrderServiceBean{
     public OrderResponse findOrderByUuid(UUID uuid) {
         TOrder order = orderRepository.findByUuid(uuid);
         if(order != null) {
-            return new OrderResponse(0, "found", order);
+            return new OrderResponse(0, Constant.RESULT_SUCCESS, order);
         } else {
-            return new OrderResponse(-1, "not found customer", null);
+            return new OrderResponse(-1, Constant.ORDER_NOT_FOUND, null);
         }
     }
 
@@ -79,13 +77,13 @@ public class OrderServiceBeanImpl implements OrderServiceBean{
     public OrderResponse findOrderByCustomerUuid(UUID customerUuid) {
         List<TOrder> order = orderRepository.findByCustomerId(customerUuid);
         if(order != null) {
-            return new OrderResponse(0, "found", order);
+            return new OrderResponse(0, Constant.RESULT_SUCCESS, order);
         } else {
-            return new OrderResponse(-1, "not found customer", null);
+            return new OrderResponse(-1, Constant.CUSTOMER_NOT_FOUND, null);
         }
     }
 
     private void fireOrderCreatedEvent(String orderUUID) throws JsonProcessingException {
-        kafkaTemplate.send("order", orderUUID);
+        kafkaTemplate.send(Constant.ORDER_TOPIC, orderUUID);
     }
 }

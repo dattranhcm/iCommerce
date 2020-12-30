@@ -1,5 +1,6 @@
 package com.technicaltest.icommerceorderservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -30,7 +31,9 @@ public class TOrder {
     @Column(name = "status")
     private String status;
 
-    @OneToMany(targetEntity = TOrderItems.class, mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   // @OneToMany(targetEntity = TOrderItems.class, mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+   @JsonManagedReference
     private List<TOrderItems> orderItems = new ArrayList<>();
 
     @Column(name = "created_at")

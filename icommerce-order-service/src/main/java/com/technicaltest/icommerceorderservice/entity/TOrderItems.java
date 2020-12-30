@@ -1,6 +1,9 @@
 package com.technicaltest.icommerceorderservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
@@ -13,8 +16,12 @@ public class TOrderItems {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "order_uuid", referencedColumnName = "uuid", columnDefinition = "RAW(16)", insertable = false, updatable = false)
+//    @ManyToOne
+//    @JoinColumn(name = "order_uuid", referencedColumnName = "uuid", columnDefinition = "RAW(16)", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_uuid")
+    @NotNull
+    @JsonBackReference
     private TOrder order;
 
     @Column(name = "item_uuid")

@@ -9,12 +9,12 @@ public interface CartRedisRepository {
     Map<Object, Object> findAllCarts();
 
     /**
-     * Add key-value pair to Redis.
+     * Add shopping cart item to Redis.
      */
     void add(ShoppingCart shoppingCart);
 
     /**
-     * Delete a key-value pair in Redis.
+     * Delete a shopping cart item in Redis.
      */
     void delete(String id);
 

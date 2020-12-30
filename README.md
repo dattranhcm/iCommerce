@@ -1,7 +1,7 @@
 ## I. BRIEF INTRODUCTION
-### Springboot Microservices architecture for Icommerce (Backend)
+### Springboot Microservices Icommerce Architecture (Backend)
 
-Implementation of a REST Microservices in an E-Commerce with Spring boot, multiple modules.                
+Implementation of a REST Microservices in an ICommerce with Spring boot, multiple modules.                
 Support very basic feature as below:
 - **Allow customer registration by their facebook account**
 - **Login with facebook account (by facebook address and facebook token provided by facebook)**
@@ -10,7 +10,7 @@ Support very basic feature as below:
 - **Create an order from shopping cart**
 - **Tracking user activity via the api they called and store as raw data**
 - **View data of tracking activity by ` customer action` or `customer`**
-### Project architecture
+### Project Architecture
 ![Spring Microservices architecture](resources/ICommerce-Architecture.png)
 
 ### Architecture Brief Description

@@ -7,6 +7,7 @@ import com.technicaltest.icommerceorderservice.dto.ProductResult;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartItem;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.CartRedisRepository;
 import com.technicaltest.icommerceorderservice.redis_shopping_cart.ShoppingCart;
+import com.technicaltest.icommerceorderservice.support.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class CartServiceBeanImpl implements CartServiceBean {
     public OrderResponse createOrderFromCart(String userUUID) throws JsonProcessingException {
         ShoppingCart cart = getCart(userUUID);
         if (cart == null) {
-            return new OrderResponse(-2, "No item from your shopping cart.", null);
+            return new OrderResponse(-2, Constant.ITEM_NOT_FOUND, null);
         }
         List<String> productOnCart = cart.getProductsInCart().stream().map(CartItem::getProductCode).collect(Collectors.toList());
         ProductResult productResult = fetchProductDetailByProductCode(productOnCart);
