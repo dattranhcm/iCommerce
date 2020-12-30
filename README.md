@@ -62,11 +62,11 @@ Support very basic feature as below:
     curl --location --request POST 'http://localhost:8081/gateway-service/customer-registration' \
     --header 'Content-Type: application/json' \
     --data-raw '{
-        "userName": "tai.nguyen",
-        "facebookId": "tai.nguyen@gmail.com",
+        "userName": "dat.tran",
+        "facebookId": "hoangdathcms@gmail.com",
         "facebookToken": "e10adc3949ba59abbe56e05711111111",
-        "firstName": "Tai",
-        "lastName": "Nguyen"
+        "firstName": "Dat",
+        "lastName": "Tran"
     }'
 ```
 Response:
@@ -81,7 +81,7 @@ Response:
 > Note: we will get a jwt after login success and will use this token to continue call the api in gateway service, let`s assume other service are internal service, not publish (those service still not apply any security check).
 ```
     curl --location --request GET 'http://localhost:8081/gateway-service/login' \
-    --header 'facebook-id: tai.nguyen@gmail.com' \
+    --header 'facebook-id: hoangdathcms@gmail.com' \
     --header 'facebook-token: e10adc3949ba59abbe56e05711111111'
 ```
 Response:
@@ -256,7 +256,7 @@ Response:
 ```
 ### 6 Fetch tracking activity by username(facebookID) or user ACTION (Activity can params: `{SEARCH, CLICK, ADD_CART, BUY}`)
 ```
-    curl --location --request GET 'http://localhost:8084/tracking-service/by-customer/tai.nguyen@gmail.com'
+    curl --location --request GET 'http://localhost:8084/tracking-service/by-customer/hoangdathcms@gmail.com'
 
     curl --location --request GET 'http://localhost:8084/tracking-service/by-activity/SEARCH'
 ```
@@ -265,7 +265,7 @@ Respone:
 [
     {
         "id": "5fec3be7265cd621e1fb343e",
-        "userName": "tai.nguyen@gmail.com",
+        "userName": "hoangdathcms@gmail.com",
         "activityName": "SEARCH",
         "actionContent": "IP12MN,IP12BLU"
     }
@@ -280,25 +280,25 @@ Respone:
 [
     {
             "id": "5fec32ed929d3d0743166d8a",
-            "userName": tai.nguyen@gmail.com,
+            "userName": hoangdathcms@gmail.com,
             "activityName": "ADD_CART",
             "actionContent": "{\"productUUID\":\"90733264-45f1-11eb-b378-0242ac130002\",\"productName\":\"IPhone 12 mini\",\"productCode\":\"IP12MN\",\"price\":19000000}"
         },
         {
             "id": "5fec391cbe0b670ba38cd68e",
-            "userName": tai.nguyen@gmail.com,
+            "userName": hoangdathcms@gmail.com,
             "activityName": "SEARCH",
             "actionContent": "IP12MN,IP12BLU"
         },
         {
             "id": "5fec3968be0b670ba38cd68f",
-            "userName": tai.nguyen@gmail.com,
+            "userName": hoangdathcms@gmail.com,
             "activityName": "SEARCH",
             "actionContent": "IP12MN,IP12BLU"
         },
         {
             "id": "5fec3be7265cd621e1fb343e",
-            "userName": "tai.nguyen@gmail.com",
+            "userName": "hoangdathcms@gmail.com",
             "activityName": "SEARCH",
             "actionContent": "IP12MN,IP12BLU"
         }
