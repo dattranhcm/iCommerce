@@ -9,7 +9,7 @@ Support very basic feature as below:
 - **Create and View their shopping cart in multiple device with same customer account**
 - **Create an order from shopping cart**
 - **Tracking user activity via the api they called and store as raw data**
-- **View data of tracking activity by ` customer action` or `customer`**
+- **View data of tracking activity by `customer action` `{SEARCH, CLICK, ADD_CART, BUY} or more action...` or `customer (by special facebookID)`**
 ### Project Architecture
 ![Spring Microservices architecture](resources/ICommerce-Architecture.png)
 
